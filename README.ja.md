@@ -45,27 +45,36 @@ Xcode 標準の `devicectl`(CoreDevice)を使うので、**脱獄も、サード
 
 ## 必要環境
 
-- Apple シリコンの Mac、macOS 26 以上、Xcode 26 以上(開発環境:Xcode 27.2、Swift 6.4)
+- Mac(Apple シリコンまたは Intel)、macOS 26 以上、Xcode 26 以上(開発環境:Xcode 27.2、Swift 6.4)
 - **デベロッパモード**をオンにし、この Mac とペアリング・信頼済みの iPhone / iPad(設定 → プライバシーとセキュリティ → デベロッパモード)
 - iOS 27.3 で動作確認。それ以前のバージョンは理論上動作しますが**未確認**です
 
 ## ダウンロード
 
-[Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest) から **`LocationSpoofer-*-macOS-arm64.dmg`**(Apple シリコン)をダウンロードし、開いてアプリをアプリケーションフォルダにドラッグします。`.zip` 版も用意しています。
+[Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest) から、お使いの Mac に合うものを選んでください:
 
-Apple Developer アカウントがないため公証(notarize)されておらず、初回起動は macOS にブロックされます。次のいずれかで許可してください:
+| お使いの Mac | ダウンロード |
+|---|---|
+| **Apple シリコン**(M1 以降) | `LocationSpoofer-*-AppleSilicon.dmg` |
+| **Intel** | `LocationSpoofer-*-Intel.dmg` |
+
+わからない場合:画面左上の  →「この Mac について」で、「チップ」なら Apple シリコン、「プロセッサ」なら Intel です。DMG を開いてアプリをアプリケーションフォルダにドラッグします。`.zip` 版も用意しています。
+
+> Intel 版はネイティブの x86_64 で、**Rosetta は不要**です。ただし、Apple シリコンの Mac で Rosetta 経由の起動を確認しただけで、**実際の Intel 機では未検証**です。
+
+Developer ID での署名と公証をしていないため、初回起動は macOS にブロックされます。次のいずれかで許可してください:
 
 - 一度開いたあと、システム設定 → プライバシーとセキュリティで「このまま開く」をクリック
 - ターミナルで `xattr -dr com.apple.quarantine /Applications/LocationSpoofer.app` を実行
 
-ダウンロードの確認には、リリースに添付の `SHA256SUMS.txt` と `shasum -a 256` の結果を比較するか、ソースからビルドしてください(下記)。**Apple シリコンの Mac のみ対応で、Intel 版はありません。**
+ダウンロードの確認には、リリースに添付の `SHA256SUMS.txt` と `shasum -a 256` の結果を比較するか、ソースからビルドしてください(下記)。
 
 ## ビルドと実行
 
 ```sh
 git clone https://github.com/jundazhu2007/LocationSpoofer.git
 cd LocationSpoofer
-./build_app.sh          # LocationSpoofer.app を生成(ad-hoc 署名)
+./build_app.sh          # LocationSpoofer.app を生成(ad-hoc 署名)。Intel 版:ARCH=x86_64 ./build_app.sh
 open LocationSpoofer.app
 ```
 

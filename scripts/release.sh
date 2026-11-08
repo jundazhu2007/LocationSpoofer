@@ -1,5 +1,6 @@
 #!/bin/zsh
-# Builds, signs, notarizes and packages a release.
+# Builds, signs, notarizes and packages a release: one version, two downloads
+# (Apple silicon and Intel).
 #
 # One-time setup (see README / CONTRIBUTING):
 #   1. A "Developer ID Application" certificate in your login keychain.
@@ -14,39 +15,44 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 : "${SIGN_ID:?Set SIGN_ID to your \"Developer ID Application: ...\" identity (security find-identity -v -p codesigning)}"
-VERSION="${VERSION:-1.0.0}"
+export VERSION="${VERSION:-1.0.0}"
 PROFILE="${NOTARY_PROFILE:-LocationSpoofer}"
-ARCH_NAME=arm64                # Apple silicon only
 APP=LocationSpoofer.app
-NAME="LocationSpoofer-$VERSION-macOS-$ARCH_NAME"
 DIST=dist
 
 rm -rf "$DIST"; mkdir -p "$DIST"
-VERSION="$VERSION" SIGN_ID="$SIGN_ID" ./build_app.sh
 
-echo "==> Verifying signature"
-codesign --verify --deep --strict --verbose=2 "$APP"
-codesign -dv "$APP" 2>&1 | grep -E "Authority=Developer ID|flags=.*runtime" >/dev/null \
-  || { echo "App is not signed with a Developer ID identity and hardened runtime"; exit 1; }
+for ARCH in arm64 x86_64; do
+  LABEL="$([ "$ARCH" = x86_64 ] && echo Intel || echo AppleSilicon)"
+  NAME="LocationSpoofer-$VERSION-$LABEL"
+  echo; echo "################ $LABEL ($ARCH) ################"
 
-echo "==> Submitting for notarization (this can take a few minutes)"
-ditto -c -k --sequesterRsrc --keepParent "$APP" "$DIST/notarize.zip"
-xcrun notarytool submit "$DIST/notarize.zip" --keychain-profile "$PROFILE" --wait
-rm "$DIST/notarize.zip"
+  ARCH=$ARCH SIGN_ID="$SIGN_ID" ./build_app.sh
 
-echo "==> Stapling the ticket"
-xcrun stapler staple "$APP"
-xcrun stapler validate "$APP"
+  echo "==> Verifying signature"
+  codesign --verify --deep --strict --verbose=2 "$APP"
+  codesign -dv "$APP" 2>&1 | grep -E "Authority=Developer ID|flags=.*runtime" >/dev/null \
+    || { echo "App is not signed with a Developer ID identity and hardened runtime"; exit 1; }
 
-echo "==> Gatekeeper assessment"
-spctl -a -vvv -t exec "$APP"
+  echo "==> Submitting the app for notarization (this can take a few minutes)"
+  ditto -c -k --sequesterRsrc --keepParent "$APP" "$DIST/notarize.zip"
+  xcrun notarytool submit "$DIST/notarize.zip" --keychain-profile "$PROFILE" --wait
+  rm "$DIST/notarize.zip"
 
-echo "==> Disk image (signed, notarized, stapled)"
-VERSION="$VERSION" SIGN_ID="$SIGN_ID" ./scripts/make_dmg.sh
-xcrun notarytool submit "$DIST/$NAME.dmg" --keychain-profile "$PROFILE" --wait
-xcrun stapler staple "$DIST/$NAME.dmg"
+  echo "==> Stapling the ticket"
+  xcrun stapler staple "$APP"
+  xcrun stapler validate "$APP"
 
-echo "==> Packaging"
-ditto -c -k --sequesterRsrc --keepParent "$APP" "$DIST/$NAME.zip"
-( cd "$DIST" && shasum -a 256 "$NAME.dmg" "$NAME.zip" > SHA256SUMS.txt && cat SHA256SUMS.txt )
-echo "Done: $DIST/$NAME.dmg and $DIST/$NAME.zip"
+  echo "==> Gatekeeper assessment"
+  spctl -a -vvv -t exec "$APP"
+
+  echo "==> Disk image (signed, notarized, stapled)"
+  ARCH=$ARCH SIGN_ID="$SIGN_ID" ./scripts/make_dmg.sh
+  xcrun notarytool submit "$DIST/$NAME.dmg" --keychain-profile "$PROFILE" --wait
+  xcrun stapler staple "$DIST/$NAME.dmg"
+
+  ditto -c -k --sequesterRsrc --keepParent "$APP" "$DIST/$NAME.zip"
+done
+
+( cd "$DIST" && shasum -a 256 *.dmg *.zip > SHA256SUMS.txt && cat SHA256SUMS.txt )
+echo "Done. Files in $DIST/"

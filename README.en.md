@@ -45,27 +45,36 @@ Also:
 
 ## Requirements
 
-- An Apple silicon Mac with macOS 26+ and Xcode 26+ (developed with Xcode 27.2 / Swift 6.4)
+- A Mac (Apple silicon or Intel) with macOS 26+ and Xcode 26+ (developed with Xcode 27.2 / Swift 6.4)
 - An iPhone / iPad with **Developer Mode** on (Settings → Privacy & Security → Developer Mode), paired with and trusting this Mac
 - Tested on iOS 27.3; older versions should work in theory but are **untested**
 
 ## Download
 
-Download **`LocationSpoofer-*-macOS-arm64.dmg`** (Apple silicon) from [Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest), open it and drag the app to Applications. A `.zip` is also provided.
+Pick the one that matches your Mac from [Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest):
 
-The app is not notarized (no Apple Developer account), so macOS blocks the first launch. Do one of:
+| Your Mac | Download |
+|---|---|
+| **Apple silicon** (M1 or later) | `LocationSpoofer-*-AppleSilicon.dmg` |
+| **Intel** | `LocationSpoofer-*-Intel.dmg` |
+
+Not sure? Apple menu  → About This Mac: "Chip" means Apple silicon, "Processor" means Intel. Open the DMG and drag the app to Applications; a `.zip` of each is also provided.
+
+> The Intel build is native x86_64 and **does not need Rosetta**. However, I have only checked that it launches under Rosetta on an Apple silicon Mac — it is **not tested on real Intel hardware**.
+
+The app is not signed with a Developer ID or notarized, so macOS blocks the first launch. Do one of:
 
 - Open it once, then go to System Settings → Privacy & Security and click **Open Anyway**; or
 - Run `xattr -dr com.apple.quarantine /Applications/LocationSpoofer.app` in Terminal.
 
-To verify the download, compare `shasum -a 256` with the `SHA256SUMS.txt` attached to the release, or build from source (below). **Apple silicon Macs only — there is no Intel build.**
+To verify the download, compare `shasum -a 256` with the `SHA256SUMS.txt` attached to the release, or build from source (below).
 
 ## Build & run
 
 ```sh
 git clone https://github.com/jundazhu2007/LocationSpoofer.git
 cd LocationSpoofer
-./build_app.sh          # builds LocationSpoofer.app (ad‑hoc signed)
+./build_app.sh          # builds LocationSpoofer.app (ad‑hoc signed); Intel: ARCH=x86_64 ./build_app.sh
 open LocationSpoofer.app
 ```
 

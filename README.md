@@ -45,27 +45,36 @@
 
 ## 需求
 
-- Apple 晶片的 Mac、macOS 26 以上、Xcode 26 以上(開發環境:Xcode 27.2、Swift 6.4)
+- Mac(Apple 晶片或 Intel)、macOS 26 以上、Xcode 26 以上(開發環境:Xcode 27.2、Swift 6.4)
 - 一支 iPhone / iPad,已開啟**開發者模式**(設定 → 隱私權與安全性 → 開發者模式),並已與這台 Mac 配對、信任
 - 已在 iOS 27.3 實測;更舊的版本理論上可行但**未測試**
 
 ## 下載
 
-到 [Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest) 下載 **`LocationSpoofer-*-macOS-arm64.dmg`**(Apple 晶片),開啟後把 app 拖進「應用程式」。也提供 `.zip` 版本。
+到 [Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest) 依照你的 Mac 選擇其中一個:
 
-因為沒有 Apple 開發者帳號,app 無法公證,第一次開啟會被 macOS 擋下。請擇一:
+| 你的 Mac | 下載 |
+|---|---|
+| **Apple 晶片**(M1 或更新) | `LocationSpoofer-*-AppleSilicon.dmg` |
+| **Intel** | `LocationSpoofer-*-Intel.dmg` |
+
+不確定的話:螢幕左上角  → 「關於這台 Mac」,看「晶片」(Apple 晶片)或「處理器」(Intel)。開啟 DMG 後把 app 拖進「應用程式」;也提供 `.zip`。
+
+> Intel 版是原生 x86_64,**不需要 Rosetta**。不過我只在 Apple 晶片的 Mac 上用 Rosetta 測試過它能啟動,**沒有在真正的 Intel 實機上測試**。
+
+因為沒有 Apple 開發者帳號簽章與公證,第一次開啟會被 macOS 擋下。請擇一:
 
 - 開啟一次後,到「系統設定 → 隱私權與安全性」,按「仍要打開」;或
 - 在終端機執行:`xattr -dr com.apple.quarantine /Applications/LocationSpoofer.app`
 
-想自己確認內容,可用 `shasum -a 256` 比對 Release 附的 `SHA256SUMS.txt`,或直接從原始碼建置(見下)。**僅支援 Apple 晶片的 Mac,不提供 Intel 版。**
+想自己確認內容,可用 `shasum -a 256` 比對 Release 附的 `SHA256SUMS.txt`,或直接從原始碼建置(見下)。
 
 ## 建置與執行
 
 ```sh
 git clone https://github.com/jundazhu2007/LocationSpoofer.git
 cd LocationSpoofer
-./build_app.sh          # 產生 LocationSpoofer.app(ad-hoc 簽名)
+./build_app.sh          # 產生 LocationSpoofer.app(ad-hoc 簽名);Intel 版:ARCH=x86_64 ./build_app.sh
 open LocationSpoofer.app
 ```
 

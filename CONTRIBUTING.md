@@ -7,7 +7,8 @@ Thanks for your interest! Issues and pull requests are welcome.
 ```sh
 swift build            # debug build
 swift test             # unit tests
-./build_app.sh         # release build -> LocationSpoofer.app
+./build_app.sh         # release build -> LocationSpoofer.app (ARCH=x86_64 for Intel)
+./scripts/build_all.sh # both downloads: dist/*.dmg, *.zip, SHA256SUMS.txt
 ```
 
 Requires macOS 26+ and Xcode 26+ (developed with Xcode 27.2 / Swift 6.4).

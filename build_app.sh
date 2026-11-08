@@ -1,7 +1,8 @@
 #!/bin/zsh
 # Builds LocationSpoofer.app (release).
 #
-#   ./build_app.sh                       ad-hoc signed (fine for local use)
+#   ./build_app.sh                       Apple silicon build, ad-hoc signed (fine for local use)
+#   ARCH=x86_64 ./build_app.sh           Intel build (native x86_64, no Rosetta needed)
 #   VERSION=1.2.3 ./build_app.sh         set the version
 #   SIGN_ID="Developer ID Application: Name (TEAMID)" ./build_app.sh
 #                                        sign for distribution (hardened runtime + secure timestamp)
@@ -11,8 +12,9 @@ cd "$(dirname "$0")"
 VERSION="${VERSION:-1.0.0}"
 APP=LocationSpoofer.app
 
-swift build -c release
-BIN="$(swift build -c release --show-bin-path)/LocationSpoofer"
+ARCH="${ARCH:-arm64}"
+swift build -c release --arch "$ARCH"
+BIN="$(swift build -c release --arch "$ARCH" --show-bin-path)/LocationSpoofer"
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
@@ -45,4 +47,4 @@ if [ -n "${SIGN_ID:-}" ]; then
 else
   codesign --force --sign - "$APP"
 fi
-echo "Built $APP ($VERSION)"
+echo "Built $APP ($VERSION, $ARCH)"
