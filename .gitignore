@@ -15,3 +15,6 @@ DerivedData/
 
 # Local screenshots / scratch
 /shots/
+
+# Release output
+/dist/

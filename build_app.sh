@@ -1,5 +1,11 @@
 #!/bin/zsh
-# Builds LocationSpoofer.app (release). Usage: ./build_app.sh   (UNIVERSAL=1 for arm64 + x86_64, VERSION=x.y.z to set the version)
+# Builds LocationSpoofer.app (release).
+#
+#   ./build_app.sh                       ad-hoc signed (fine for local use)
+#   UNIVERSAL=1 ./build_app.sh           arm64 + x86_64 (x86_64 is untested)
+#   VERSION=1.2.3 ./build_app.sh         set the version
+#   SIGN_ID="Developer ID Application: Name (TEAMID)" ./build_app.sh
+#                                        sign for distribution (hardened runtime + secure timestamp)
 set -e
 cd "$(dirname "$0")"
 
@@ -25,7 +31,7 @@ cat > "$APP/Contents/Info.plist" <<PL
 <plist version="1.0"><dict>
   <key>CFBundleName</key><string>Location Spoofer</string>
   <key>CFBundleDisplayName</key><string>Location Spoofer</string>
-  <key>CFBundleIdentifier</key><string>io.github.locationspoofer</string>
+  <key>CFBundleIdentifier</key><string>io.github.jundazhu2007.LocationSpoofer</string>
   <key>CFBundleExecutable</key><string>LocationSpoofer</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleShortVersionString</key><string>$VERSION</string>
@@ -40,5 +46,9 @@ cat > "$APP/Contents/Info.plist" <<PL
 </dict></plist>
 PL
 
-codesign --force --sign - "$APP"
+if [ -n "${SIGN_ID:-}" ]; then
+  codesign --force --options runtime --timestamp --sign "$SIGN_ID" "$APP"
+else
+  codesign --force --sign - "$APP"
+fi
 echo "Built $APP ($VERSION)"
