@@ -2,7 +2,6 @@
 # Builds LocationSpoofer.app (release).
 #
 #   ./build_app.sh                       ad-hoc signed (fine for local use)
-#   UNIVERSAL=1 ./build_app.sh           arm64 + x86_64 (x86_64 is untested)
 #   VERSION=1.2.3 ./build_app.sh         set the version
 #   SIGN_ID="Developer ID Application: Name (TEAMID)" ./build_app.sh
 #                                        sign for distribution (hardened runtime + secure timestamp)
@@ -12,13 +11,8 @@ cd "$(dirname "$0")"
 VERSION="${VERSION:-1.0.0}"
 APP=LocationSpoofer.app
 
-if [ "${UNIVERSAL:-0}" = "1" ]; then
-  swift build -c release --arch arm64 --arch x86_64
-  BIN="$(swift build -c release --arch arm64 --arch x86_64 --show-bin-path)/LocationSpoofer"
-else
-  swift build -c release
-  BIN="$(swift build -c release --show-bin-path)/LocationSpoofer"
-fi
+swift build -c release
+BIN="$(swift build -c release --show-bin-path)/LocationSpoofer"
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"

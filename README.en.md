@@ -45,7 +45,7 @@ Also:
 
 ## Requirements
 
-- macOS 26+ and Xcode 26+ (developed with Xcode 27.2 / Swift 6.4)
+- An Apple silicon Mac with macOS 26+ and Xcode 26+ (developed with Xcode 27.2 / Swift 6.4)
 - An iPhone / iPad with **Developer Mode** on (Settings → Privacy & Security → Developer Mode), paired with and trusting this Mac
 - Tested on iOS 27.3; older versions should work in theory but are **untested**
 
@@ -58,7 +58,7 @@ The app is not notarized (no Apple Developer account), so macOS blocks the first
 - Open it once, then go to System Settings → Privacy & Security and click **Open Anyway**; or
 - Run `xattr -dr com.apple.quarantine /Applications/LocationSpoofer.app` in Terminal.
 
-To verify the download, compare `shasum -a 256` with the `SHA256SUMS.txt` attached to the release, or build from source (below). On an Intel Mac, build it yourself (`UNIVERSAL=1 ./build_app.sh`, **untested**).
+To verify the download, compare `shasum -a 256` with the `SHA256SUMS.txt` attached to the release, or build from source (below). **Apple silicon Macs only — there is no Intel build.**
 
 ## Build & run
 

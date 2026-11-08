@@ -45,7 +45,7 @@ Xcode 標準の `devicectl`(CoreDevice)を使うので、**脱獄も、サード
 
 ## 必要環境
 
-- macOS 26 以上、Xcode 26 以上(開発環境:Xcode 27.2、Swift 6.4)
+- Apple シリコンの Mac、macOS 26 以上、Xcode 26 以上(開発環境:Xcode 27.2、Swift 6.4)
 - **デベロッパモード**をオンにし、この Mac とペアリング・信頼済みの iPhone / iPad(設定 → プライバシーとセキュリティ → デベロッパモード)
 - iOS 27.3 で動作確認。それ以前のバージョンは理論上動作しますが**未確認**です
 
@@ -58,7 +58,7 @@ Apple Developer アカウントがないため公証(notarize)されておらず
 - 一度開いたあと、システム設定 → プライバシーとセキュリティで「このまま開く」をクリック
 - ターミナルで `xattr -dr com.apple.quarantine /Applications/LocationSpoofer.app` を実行
 
-ダウンロードの確認には、リリースに添付の `SHA256SUMS.txt` と `shasum -a 256` の結果を比較するか、ソースからビルドしてください(下記)。Intel Mac では自分でビルドしてください(`UNIVERSAL=1 ./build_app.sh`、**未検証**)。
+ダウンロードの確認には、リリースに添付の `SHA256SUMS.txt` と `shasum -a 256` の結果を比較するか、ソースからビルドしてください(下記)。**Apple シリコンの Mac のみ対応で、Intel 版はありません。**
 
 ## ビルドと実行
 

@@ -2,12 +2,12 @@
 # Packages LocationSpoofer.app into a drag-to-install disk image (.dmg).
 #
 #   ./build_app.sh && ./scripts/make_dmg.sh
-#   Optional: VERSION=1.0.0  UNIVERSAL=1 (only changes the file name)  SIGN_ID="Developer ID Application: ..."
+#   Optional: VERSION=1.0.0  SIGN_ID="Developer ID Application: ..."
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 VERSION="${VERSION:-1.0.0}"
-ARCH_NAME="$([ "${UNIVERSAL:-0}" = "1" ] && echo universal || echo arm64)"
+ARCH_NAME=arm64                # Apple silicon only
 APP=LocationSpoofer.app
 OUT="dist/LocationSpoofer-$VERSION-macOS-$ARCH_NAME.dmg"
 [ -d "$APP" ] || { echo "Build the app first: ./build_app.sh"; exit 1; }

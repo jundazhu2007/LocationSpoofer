@@ -45,7 +45,7 @@
 
 ## 需求
 
-- macOS 26 以上、Xcode 26 以上(開發環境:Xcode 27.2、Swift 6.4)
+- Apple 晶片的 Mac、macOS 26 以上、Xcode 26 以上(開發環境:Xcode 27.2、Swift 6.4)
 - 一支 iPhone / iPad,已開啟**開發者模式**(設定 → 隱私權與安全性 → 開發者模式),並已與這台 Mac 配對、信任
 - 已在 iOS 27.3 實測;更舊的版本理論上可行但**未測試**
 
@@ -58,7 +58,7 @@
 - 開啟一次後,到「系統設定 → 隱私權與安全性」,按「仍要打開」;或
 - 在終端機執行:`xattr -dr com.apple.quarantine /Applications/LocationSpoofer.app`
 
-想自己確認內容,可用 `shasum -a 256` 比對 Release 附的 `SHA256SUMS.txt`,或直接從原始碼建置(見下)。Intel Mac 請自行建置(`UNIVERSAL=1 ./build_app.sh`,**未測試**)。
+想自己確認內容,可用 `shasum -a 256` 比對 Release 附的 `SHA256SUMS.txt`,或直接從原始碼建置(見下)。**僅支援 Apple 晶片的 Mac,不提供 Intel 版。**
 
 ## 建置與執行
 
