@@ -51,7 +51,7 @@ Also:
 
 ## Download
 
-Grab `LocationSpoofer-*-macOS-arm64.zip` (**Apple silicon**) from [Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest), unzip it and move the app to Applications.
+Download **`LocationSpoofer-*-macOS-arm64.dmg`** (Apple silicon) from [Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest), open it and drag the app to Applications. A `.zip` is also provided.
 
 The app is not notarized (no Apple Developer account), so macOS blocks the first launch. Do one of:
 

@@ -51,7 +51,7 @@
 
 ## 下載
 
-到 [Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest) 下載 `LocationSpoofer-*-macOS-arm64.zip`(**Apple 晶片**),解壓後放進「應用程式」。
+到 [Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest) 下載 **`LocationSpoofer-*-macOS-arm64.dmg`**(Apple 晶片),開啟後把 app 拖進「應用程式」。也提供 `.zip` 版本。
 
 因為沒有 Apple 開發者帳號,app 無法公證,第一次開啟會被 macOS 擋下。請擇一:
 

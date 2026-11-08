@@ -41,7 +41,12 @@ xcrun stapler validate "$APP"
 echo "==> Gatekeeper assessment"
 spctl -a -vvv -t exec "$APP"
 
+echo "==> Disk image (signed, notarized, stapled)"
+VERSION="$VERSION" SIGN_ID="$SIGN_ID" ./scripts/make_dmg.sh
+xcrun notarytool submit "$DIST/$NAME.dmg" --keychain-profile "$PROFILE" --wait
+xcrun stapler staple "$DIST/$NAME.dmg"
+
 echo "==> Packaging"
 ditto -c -k --sequesterRsrc --keepParent "$APP" "$DIST/$NAME.zip"
-( cd "$DIST" && shasum -a 256 "$NAME.zip" > SHA256SUMS.txt && cat SHA256SUMS.txt )
-echo "Done: $DIST/$NAME.zip"
+( cd "$DIST" && shasum -a 256 "$NAME.dmg" "$NAME.zip" > SHA256SUMS.txt && cat SHA256SUMS.txt )
+echo "Done: $DIST/$NAME.dmg and $DIST/$NAME.zip"

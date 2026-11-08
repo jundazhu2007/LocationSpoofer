@@ -51,7 +51,7 @@ Xcode 標準の `devicectl`(CoreDevice)を使うので、**脱獄も、サード
 
 ## ダウンロード
 
-[Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest) から `LocationSpoofer-*-macOS-arm64.zip`(**Apple シリコン**)をダウンロードして解凍し、アプリケーションフォルダに移動します。
+[Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest) から **`LocationSpoofer-*-macOS-arm64.dmg`**(Apple シリコン)をダウンロードし、開いてアプリをアプリケーションフォルダにドラッグします。`.zip` 版も用意しています。
 
 Apple Developer アカウントがないため公証(notarize)されておらず、初回起動は macOS にブロックされます。次のいずれかで許可してください:
 
