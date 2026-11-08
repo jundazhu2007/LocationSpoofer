@@ -1,0 +1,17 @@
+# SwiftPM / Xcode
+.build/
+.swiftpm/
+*.xcodeproj/xcuserdata/
+xcuserdata/
+DerivedData/
+
+# Build output
+*.app
+*.dSYM
+/out/
+
+# macOS
+.DS_Store
+
+# Local screenshots / scratch
+/shots/

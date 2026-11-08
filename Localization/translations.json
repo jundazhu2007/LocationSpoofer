@@ -1,0 +1,1022 @@
+{
+ "%.0f km/h · 已行進 %@": {
+  "en": "%.0f km/h · Traveled %@",
+  "ja": "%.0f km/h · 移動距離 %@"
+ },
+ "%@ %02lld:%02lld 起飛 · 表定 %@": {
+  "en": "%@ %02lld:%02lld departure · scheduled %@",
+  "ja": "%@ %02lld:%02lld 出発 · 予定 %@"
+ },
+ "%@ 已中止:%@": {
+  "en": "%@ aborted: %@",
+  "ja": "%@ を中止しました:%@"
+ },
+ "%@ 無後續班次": {
+  "en": "%@ no upcoming flights",
+  "ja": "%@ 次の便なし"
+ },
+ "%@ 登機中": {
+  "en": "%@ boarding",
+  "ja": "%@ 搭乗中"
+ },
+ "%@ 等待起飛": {
+  "en": "%@ waiting for departure",
+  "ja": "%@ 出発待ち"
+ },
+ "%@(%lld 點)": {
+  "en": "%@ (%lld pts)",
+  "ja": "%@(%lld 点)"
+ },
+ "%@:TPE、桃園…": {
+  "en": "%@: TPE, Taoyuan…",
+  "ja": "%@:TPE、桃園…"
+ },
+ "%@:機場代碼無效,略過": {
+  "en": "%@: invalid airport code, skipped",
+  "ja": "%@:空港コードが無効なためスキップしました"
+ },
+ "%lld 秒": {
+  "en": "%lld s",
+  "ja": "%lld 秒"
+ },
+ "(已飛行 %@,追上目前進度)": {
+  "en": " (already airborne for %@, caught up to current progress)",
+  "ja": "(すでに %@ 飛行済み。現在の進行に追いつきました)"
+ },
+ "(表定 %@ → 實際 %@)": {
+  "en": " (scheduled %@ → actual %@)",
+  "ja": "(予定 %@ → 実際 %@)"
+ },
+ "(路線與飛行)": {
+  "en": "(routes & flights)",
+  "ja": "(ルートとフライト)"
+ },
+ ",%lld 段無路徑改走直線": {
+  "en": ", %lld leg(s) had no road route and use straight lines",
+  "ja": "、%lld 区間は経路がないため直線で移動"
+ },
+ ",以 %lld km/h 約 %@": {
+  "en": ", about %2$@ at %1$lld km/h",
+  "ja": "、%1$lld km/h で約 %2$@"
+ },
+ "Apple 情境": {
+  "en": "Apple Scenarios",
+  "ja": "Apple シナリオ"
+ },
+ "GPS 抖動": {
+  "en": "GPS jitter",
+  "ja": "GPS ゆらぎ"
+ },
+ "GPX 裡沒有座標點": {
+  "en": "No coordinates in the GPX file",
+  "ja": "GPX に座標がありません"
+ },
+ "→ 傳送到 %@": {
+  "en": "→ Teleported to %@",
+  "ja": "→ %@ に移動しました"
+ },
+ "→ 已還原真實定位(%lld 台)": {
+  "en": "→ Real location restored (%lld device(s))",
+  "ja": "→ 実際の位置情報に戻しました(%lld 台)"
+ },
+ "→ 情境:%@": {
+  "en": "→ Scenario: %@",
+  "ja": "→ シナリオ:%@"
+ },
+ "✈︎ %@ 已落地": {
+  "en": "✈︎ %@ has landed",
+  "ja": "✈︎ %@ 着陸"
+ },
+ "✈︎ %@ 起飛": {
+  "en": "✈︎ %@ departed",
+  "ja": "✈︎ %@ 離陸"
+ },
+ "✈︎ %@ 飛行中": {
+  "en": "✈︎ %@ in flight",
+  "ja": "✈︎ %@ 飛行中"
+ },
+ "「闔上螢幕也不睡眠」「預約喚醒」會修改系統電源設定,需要管理員密碼;不再使用時請關閉。": {
+  "en": "\"Stay awake with lid closed\" and \"Schedule wake\" change system power settings and need an administrator password; turn them off when no longer needed.",
+  "ja": "「画面を閉じてもスリープしない」「スリープ解除の予約」はシステムの電源設定を変更し、管理者パスワードが必要です。不要になったらオフにしてください。"
+ },
+ "不停": {
+  "en": "None",
+  "ja": "なし"
+ },
+ "中心": {
+  "en": "Center",
+  "ja": "中心"
+ },
+ "交通方式與速度": {
+  "en": "Transport & Speed",
+  "ja": "移動手段と速度"
+ },
+ "以 %lld km/h 約 %@": {
+  "en": "About %2$@ at %1$lld km/h",
+  "ja": "%1$lld km/h で約 %2$@"
+ },
+ "位置是由 Mac 一路送給 iPhone,所以 Mac 必須:開機、不睡眠、與 iPhone 在同一個網路。": {
+  "en": "The Mac sends the position to the iPhone continuously, so the Mac must be on, awake, and on the same network as the iPhone.",
+  "ja": "位置情報は Mac から iPhone に送り続けるため、Mac は電源オン・スリープなし・iPhone と同じネットワークである必要があります。"
+ },
+ "依距離估算(巡航 850 km/h)": {
+  "en": "Estimate from distance (cruise 850 km/h)",
+  "ja": "距離から推定(巡航 850 km/h)"
+ },
+ "倫敦大笨鐘": {
+  "en": "Big Ben, London",
+  "ja": "ロンドン・ビッグ・ベン"
+ },
+ "停止": {
+  "en": "Stop",
+  "ja": "停止"
+ },
+ "停止移動": {
+  "en": "Stop Moving",
+  "ja": "移動を停止"
+ },
+ "停留": {
+  "en": "Dwell",
+  "ja": "停止"
+ },
+ "僅供開發測試、隱私研究與學習用途。請遵守當地法律與各服務的使用條款。": {
+  "en": "For development, testing, privacy research and learning only. Follow local laws and each service's terms of use.",
+  "ja": "開発・テスト・プライバシー研究・学習用です。各国の法律や各サービスの利用規約を守ってください。"
+ },
+ "儲存": {
+  "en": "Save",
+  "ja": "保存"
+ },
+ "先點地圖選起點並按「傳送」,再啟用搖桿": {
+  "en": "Click a start point on the map and apply it in Teleport mode, then enable the joystick",
+  "ja": "先に地図で出発点を選び、テレポートモードで適用してから、ジョイスティックを有効にします"
+ },
+ "其他": {
+  "en": "Other",
+  "ja": "その他"
+ },
+ "出發": {
+  "en": "From",
+  "ja": "出発"
+ },
+ "出發機場": {
+  "en": "Departure airport",
+  "ja": "出発空港"
+ },
+ "刪除": {
+  "en": "Delete",
+  "ja": "削除"
+ },
+ "刪除此點": {
+  "en": "Delete This Point",
+  "ja": "この点を削除"
+ },
+ "前往": {
+  "en": "Go",
+  "ja": "移動"
+ },
+ "剩餘": {
+  "en": "Remaining",
+  "ja": "残り"
+ },
+ "加速": {
+  "en": "Speed-up",
+  "ja": "加速"
+ },
+ "匯入 GPX": {
+  "en": "Import GPX",
+  "ja": "GPX を読み込む"
+ },
+ "匯出 GPX": {
+  "en": "Export GPX",
+  "ja": "GPX を書き出す"
+ },
+ "半徑": {
+  "en": "Radius",
+  "ja": "半径"
+ },
+ "反轉": {
+  "en": "Reverse",
+  "ja": "反転"
+ },
+ "取消": {
+  "en": "Cancel",
+  "ja": "キャンセル"
+ },
+ "只列直飛": {
+  "en": "Direct only",
+  "ja": "直行便のみ"
+ },
+ "台北 101": {
+  "en": "Taipei 101",
+  "ja": "台北101"
+ },
+ "同步到所有已連線裝置(iPhone + iPad)": {
+  "en": "Sync to all connected devices (iPhone + iPad)",
+  "ja": "接続中のすべてのデバイスに同期(iPhone + iPad)"
+ },
+ "啟用": {
+  "en": "Enabled",
+  "ja": "有効"
+ },
+ "啟用搖桿": {
+  "en": "Enable Joystick",
+  "ja": "ジョイスティック有効化"
+ },
+ "單次": {
+  "en": "One-time",
+  "ja": "1回のみ"
+ },
+ "單程": {
+  "en": "One-way",
+  "ja": "片道"
+ },
+ "單車": {
+  "en": "Bike",
+  "ja": "自転車"
+ },
+ "固定航班": {
+  "en": "Scheduled Flights",
+  "ja": "定期フライト"
+ },
+ "圈數": {
+  "en": "Laps",
+  "ja": "周回数"
+ },
+ "圈數:無限": {
+  "en": "Laps: unlimited",
+  "ja": "周回数:無制限"
+ },
+ "地圖": {
+  "en": "Map",
+  "ja": "地図"
+ },
+ "地點": {
+  "en": "Places",
+  "ja": "場所"
+ },
+ "套用到 iPhone": {
+  "en": "Apply to iPhone",
+  "ja": "iPhone に適用"
+ },
+ "定位": {
+  "en": "Location",
+  "ja": "ロケーション"
+ },
+ "定位模擬": {
+  "en": "Location Simulation",
+  "ja": "位置情報シミュレーション"
+ },
+ "定點": {
+  "en": "Teleport",
+  "ja": "テレポート"
+ },
+ "客機": {
+  "en": "Airliner",
+  "ja": "旅客機"
+ },
+ "對調": {
+  "en": "Swap",
+  "ja": "入れ替え"
+ },
+ "尚未有目前位置,請先「套用到 iPhone」": {
+  "en": "No current position yet; tap \"Apply to iPhone\" first",
+  "ja": "現在位置がありません。先に「iPhone に適用」を押してください"
+ },
+ "尚未連線(解鎖 iPhone 後會自動連線)": {
+  "en": "Not connected (connects automatically after unlocking the iPhone)",
+  "ja": "未接続(iPhone のロック解除後に自動接続します)"
+ },
+ "尚無儲存的路線": {
+  "en": "No saved routes yet",
+  "ja": "保存したルートはまだありません"
+ },
+ "尚無收藏": {
+  "en": "No favorites yet",
+  "ja": "お気に入りはまだありません"
+ },
+ "尚無歷史": {
+  "en": "No history yet",
+  "ja": "履歴はまだありません"
+ },
+ "尚無紀錄": {
+  "en": "No log entries yet",
+  "ja": "ログはまだありません"
+ },
+ "尚無航班。新增後,到點會自動登機、起飛;誤點可隨時修改並立即套用。": {
+  "en": "No flights yet. Once added, flights board and depart automatically on time; delays can be edited anytime and apply immediately.",
+  "ja": "フライトはまだありません。追加すると時刻になれば自動で搭乗・離陸します。遅延はいつでも変更でき、すぐに反映されます。"
+ },
+ "尚無軌跡": {
+  "en": "No trail yet",
+  "ja": "軌跡がありません"
+ },
+ "巡航": {
+  "en": "Cruise",
+  "ja": "巡航"
+ },
+ "已停用": {
+  "en": "Disabled",
+  "ja": "無効"
+ },
+ "已匯入 %lld 個點:%@": {
+  "en": "Imported %lld points: %@",
+  "ja": "%lld 点を読み込みました:%@"
+ },
+ "已匯出 %@": {
+  "en": "Exported %@",
+  "ja": "%@ を書き出しました"
+ },
+ "已匯出軌跡 %lld 點": {
+  "en": "Exported trail (%lld points)",
+  "ja": "軌跡を書き出しました(%lld 点)"
+ },
+ "已抵達終點": {
+  "en": "Arrived at destination",
+  "ja": "目的地に到着しました"
+ },
+ "已繞完 %lld 圈": {
+  "en": "Completed %lld lap(s)",
+  "ja": "%lld 周しました"
+ },
+ "已行進": {
+  "en": "Traveled",
+  "ja": "移動距離"
+ },
+ "已送出第一筆位置": {
+  "en": "First location sent",
+  "ja": "最初の位置情報を送信しました"
+ },
+ "已連線": {
+  "en": "Connected",
+  "ja": "接続済み"
+ },
+ "已選 %.6f, %.6f": {
+  "en": "Selected %.6f, %.6f",
+  "ja": "選択中 %.6f, %.6f"
+ },
+ "已預約喚醒:%@": {
+  "en": "Wake scheduled: %@",
+  "ja": "スリープ解除を予約しました:%@"
+ },
+ "巴黎鐵塔": {
+  "en": "Eiffel Tower",
+  "ja": "エッフェル塔"
+ },
+ "平滑起步與煞車(客機會先加速)": {
+  "en": "Smooth acceleration and braking (airliners accelerate first)",
+  "ja": "なめらかな加減速(旅客機は先に加速)"
+ },
+ "往返": {
+  "en": "Round trip",
+  "ja": "往復"
+ },
+ "從目前位置出發": {
+  "en": "Start from current position",
+  "ja": "現在位置から出発"
+ },
+ "循環": {
+  "en": "Loop",
+  "ja": "ループ"
+ },
+ "情境失敗": {
+  "en": "Scenario failed",
+  "ja": "シナリオに失敗しました"
+ },
+ "成田機場": {
+  "en": "Narita Airport",
+  "ja": "成田空港"
+ },
+ "找不到「%@」": {
+  "en": "No results for \"%@\"",
+  "ja": "「%@」が見つかりません"
+ },
+ "找不到符合的機場": {
+  "en": "No matching airports",
+  "ja": "該当する空港がありません"
+ },
+ "抵達": {
+  "en": "To",
+  "ja": "到着"
+ },
+ "抵達機場": {
+  "en": "Arrival airport",
+  "ja": "到着空港"
+ },
+ "拖曳搖桿,或用方向鍵 / WASD(北在上)": {
+  "en": "Drag the joystick, or use arrow keys / WASD (north is up)",
+  "ja": "ジョイスティックをドラッグ、または矢印キー / WASD(北が上)"
+ },
+ "拖曳移動,右鍵刪除": {
+  "en": "Drag to move, right-click to delete",
+  "ja": "ドラッグで移動、右クリックで削除"
+ },
+ "提示:devicectl 只能設定經緯度,無法指定海拔與速度欄位。": {
+  "en": "Note: devicectl can only set latitude/longitude, not altitude or speed fields.",
+  "ja": "注意:devicectl は緯度・経度のみ設定でき、高度や速度フィールドは指定できません。"
+ },
+ "搖桿": {
+  "en": "Joystick",
+  "ja": "ジョイスティック"
+ },
+ "搜尋地點,按 Enter": {
+  "en": "Search places, press Enter",
+  "ja": "場所を検索(Enter)"
+ },
+ "撤銷": {
+  "en": "Undo",
+  "ja": "取り消し"
+ },
+ "撤銷上一個路徑點": {
+  "en": "Undo Last Waypoint",
+  "ja": "直前の経由点を取り消す"
+ },
+ "收藏": {
+  "en": "Favorites",
+  "ja": "お気に入り"
+ },
+ "收藏名稱": {
+  "en": "Favorite name",
+  "ja": "お気に入りの名前"
+ },
+ "收藏與紀錄": {
+  "en": "Library & Log",
+  "ja": "お気に入りとログ"
+ },
+ "新加坡魚尾獅": {
+  "en": "Merlion, Singapore",
+  "ja": "シンガポール・マーライオン"
+ },
+ "新增航班": {
+  "en": "Add Flight",
+  "ja": "フライトを追加"
+ },
+ "方位": {
+  "en": "Heading",
+  "ja": "方位"
+ },
+ "方向": {
+  "en": "Direction",
+  "ja": "方向"
+ },
+ "方式": {
+  "en": "Style",
+  "ja": "方式"
+ },
+ "日期(單次)": {
+  "en": "Date (one-time)",
+  "ja": "日付(1回のみ)"
+ },
+ "時間": {
+  "en": "Time",
+  "ja": "時刻"
+ },
+ "時間加速": {
+  "en": "Time Scale",
+  "ja": "時間加速"
+ },
+ "時間皆為 Mac 的本地時區。": {
+  "en": "All times use the Mac's local time zone.",
+  "ja": "時刻はすべて Mac のローカルタイムゾーンです。"
+ },
+ "智慧插入:點線段旁邊,插入最近的一段": {
+  "en": "Smart insert: clicking beside a segment inserts into the nearest one",
+  "ja": "スマート挿入:線分の近くをクリックすると最も近い区間に挿入"
+ },
+ "暫停": {
+  "en": "Pause",
+  "ja": "一時停止"
+ },
+ "未偵測到 iPhone": {
+  "en": "No iPhone detected",
+  "ja": "iPhone が見つかりません"
+ },
+ "未命名": {
+  "en": "Unnamed",
+  "ja": "名称未設定"
+ },
+ "未在模擬": {
+  "en": "Not simulating",
+  "ja": "シミュレーションしていません"
+ },
+ "杜拜哈里發塔": {
+  "en": "Burj Khalifa, Dubai",
+  "ja": "ドバイ・ブルジュ・ハリファ"
+ },
+ "東京鐵塔": {
+  "en": "Tokyo Tower",
+  "ja": "東京タワー"
+ },
+ "桃園國際機場": {
+  "en": "Taoyuan International Airport",
+  "ja": "桃園国際空港"
+ },
+ "標準": {
+  "en": "Standard",
+  "ja": "標準"
+ },
+ "模擬定位中": {
+  "en": "Simulating location",
+  "ja": "位置情報をシミュレーション中"
+ },
+ "機場到機場": {
+  "en": "Airport to Airport",
+  "ja": "空港から空港へ"
+ },
+ "機場與航線資料來自 OpenFlights(ODbL)": {
+  "en": "Airport and route data from OpenFlights (ODbL)",
+  "ja": "空港・航路データ:OpenFlights(ODbL)"
+ },
+ "步行": {
+  "en": "Walk",
+  "ja": "徒歩"
+ },
+ "歷史": {
+  "en": "History",
+  "ja": "履歴"
+ },
+ "每週 %@": {
+  "en": "Weekly %@",
+  "ja": "毎週 %@"
+ },
+ "每週重複;全部取消則為單次航班": {
+  "en": "Repeats weekly; deselect all for a one-time flight",
+  "ja": "毎週繰り返し。すべて解除すると1回のみのフライトになります"
+ },
+ "汽車": {
+  "en": "Car",
+  "ja": "自動車"
+ },
+ "沒有選擇裝置": {
+  "en": "No device selected",
+  "ja": "デバイスが選択されていません"
+ },
+ "沿道路 %lld 段": {
+  "en": "%lld leg(s) along roads",
+  "ja": "道路沿い %lld 区間"
+ },
+ "沿道路行走(MapKit 導航路線)": {
+  "en": "Follow roads (MapKit directions)",
+  "ja": "道路に沿って移動(MapKit のルート)"
+ },
+ "洛杉磯機場 LAX": {
+  "en": "Los Angeles Airport (LAX)",
+  "ja": "ロサンゼルス空港 LAX"
+ },
+ "混合": {
+  "en": "Hybrid",
+  "ja": "ハイブリッド"
+ },
+ "清除": {
+  "en": "Clear",
+  "ja": "クリア"
+ },
+ "清除歷史": {
+  "en": "Clear History",
+  "ja": "履歴を消去"
+ },
+ "準點": {
+  "en": "On time",
+  "ja": "定刻"
+ },
+ "漫遊": {
+  "en": "Wander",
+  "ja": "散策"
+ },
+ "火車": {
+  "en": "Train",
+  "ja": "電車"
+ },
+ "為下一班預約喚醒 Mac": {
+  "en": "Schedule Mac wake for next flight",
+  "ja": "次の便に合わせて Mac のスリープ解除を予約"
+ },
+ "無人看守運作": {
+  "en": "Unattended Operation",
+  "ja": "無人運用"
+ },
+ "無後續班次": {
+  "en": "No upcoming flights",
+  "ja": "次の便なし"
+ },
+ "無法解析座標:%@": {
+  "en": "Can't parse coordinates: %@",
+  "ja": "座標を解析できません:%@"
+ },
+ "熱門地點": {
+  "en": "Popular Places",
+  "ja": "人気スポット"
+ },
+ "版本 %@": {
+  "en": "Version %@",
+  "ja": "バージョン %@"
+ },
+ "環繞": {
+  "en": "Orbit",
+  "ja": "周回"
+ },
+ "由 %@ 開發": {
+  "en": "Developed by %@",
+  "ja": "開発:%@"
+ },
+ "登機:%@,已傳送到 %@": {
+  "en": "Boarding: %@, teleported to %@",
+  "ja": "搭乗:%@、%@ に移動しました"
+ },
+ "登機中 · %@ 後起飛": {
+  "en": "Boarding · departs in %@",
+  "ja": "搭乗中 · %@ 後に出発"
+ },
+ "等待起飛 · 倒數 %@": {
+  "en": "Waiting · departs in %@",
+  "ja": "出発待ち · あと %@"
+ },
+ "紀錄": {
+  "en": "Log",
+  "ja": "ログ"
+ },
+ "紐約時代廣場": {
+  "en": "Times Square, New York",
+  "ja": "ニューヨーク・タイムズスクエア"
+ },
+ "結束": {
+  "en": "Quit",
+  "ja": "終了"
+ },
+ "結束 app 時自動還原真實定位": {
+  "en": "Restore real location when quitting",
+  "ja": "終了時に実際の位置情報に戻す"
+ },
+ "編輯": {
+  "en": "Edit",
+  "ja": "編集"
+ },
+ "編輯航班": {
+  "en": "Edit Flight",
+  "ja": "フライトを編集"
+ },
+ "總距離 %@": {
+  "en": "Total distance %@",
+  "ja": "総距離 %@"
+ },
+ "繞 %lld 圈": {
+  "en": "%lld lap(s)",
+  "ja": "%lld 周"
+ },
+ "繼續": {
+  "en": "Resume",
+  "ja": "再開"
+ },
+ "自訂": {
+  "en": "Custom",
+  "ja": "カスタム"
+ },
+ "至少需要 2 個點(或先定位後再加 1 個目標點)": {
+  "en": "At least 2 points are needed (or set a position first, then add 1 target point)",
+  "ja": "2 点以上が必要です(先に位置を設定してから目的地を 1 点追加してもOK)"
+ },
+ "舊金山金門大橋": {
+  "en": "Golden Gate Bridge",
+  "ja": "ゴールデンゲートブリッジ"
+ },
+ "航班": {
+  "en": "Flights",
+  "ja": "フライト"
+ },
+ "航班已停用或刪除,中止飛行": {
+  "en": "Flight disabled or deleted; flight aborted",
+  "ja": "便が無効化または削除されたため、飛行を中止しました"
+ },
+ "航班號(選填)": {
+  "en": "Flight number (optional)",
+  "ja": "便名(任意)"
+ },
+ "航程 %@": {
+  "en": "Distance %@",
+  "ja": "航程 %@"
+ },
+ "航程 %@,需平均巡航約 %lld km/h": {
+  "en": "Distance %@, needs average cruise of about %lld km/h",
+  "ja": "航程 %@、平均巡航 約 %lld km/h が必要"
+ },
+ "航程 %@:時間太短,飛不到": {
+  "en": "Distance %@: too short a time to fly it",
+  "ja": "航程 %@:時間が短すぎて到達できません"
+ },
+ "落地後 %lld 分還原定位": {
+  "en": "Restore location %lld min after landing",
+  "ja": "着陸 %lld 分後に位置情報を戻す"
+ },
+ "落地後保留在目的地": {
+  "en": "Stay at destination after landing",
+  "ja": "着陸後は目的地に留まる"
+ },
+ "落地後時間到,還原真實定位": {
+  "en": "Time after landing is up; restoring real location",
+  "ja": "着陸後の時間になりました。実際の位置情報に戻します"
+ },
+ "處理中…": {
+  "en": "Working…",
+  "ja": "処理中…"
+ },
+ "衛星": {
+  "en": "Satellite",
+  "ja": "航空写真"
+ },
+ "表定 %@": {
+  "en": "Scheduled %@",
+  "ja": "予定 %@"
+ },
+ "裝置": {
+  "en": "Device",
+  "ja": "デバイス"
+ },
+ "裝置暫時離線,恢復連線後會自動追上目前位置": {
+  "en": "Device is offline for now; it will catch up to the current position once reconnected",
+  "ja": "デバイスが一時的にオフラインです。再接続すると現在位置に自動で追いつきます"
+ },
+ "規劃路線中…": {
+  "en": "Planning route…",
+  "ja": "ルートを計画中…"
+ },
+ "設定失敗:%@": {
+  "en": "Failed: %@",
+  "ja": "設定に失敗しました:%@"
+ },
+ "語言": {
+  "en": "Language",
+  "ja": "言語"
+ },
+ "誤點 %lld 分": {
+  "en": "Delay %lld min",
+  "ja": "遅延 %lld 分"
+ },
+ "誤點 %lld 分(即時套用)": {
+  "en": "Delayed %lld min (applies instantly)",
+  "ja": "%lld 分遅延(即時反映)"
+ },
+ "請先在地圖點選中心": {
+  "en": "Click a center on the map first",
+  "ja": "先に地図で中心をクリックしてください"
+ },
+ "請先在地圖點選圓心": {
+  "en": "Click a circle center on the map first",
+  "ja": "先に地図で円の中心をクリックしてください"
+ },
+ "請先在地圖點選起點": {
+  "en": "Click a starting point on the map first",
+  "ja": "先に地図で出発地点をクリックしてください"
+ },
+ "請先選一個中心點": {
+  "en": "Pick a center point first",
+  "ja": "先に中心点を選んでください"
+ },
+ "請到「系統設定 → 一般 → 登入項目」允許 LocationSpoofer": {
+  "en": "Allow LocationSpoofer in System Settings → General → Login Items",
+  "ja": "「システム設定 → 一般 → ログイン項目」で LocationSpoofer を許可してください"
+ },
+ "請選擇出發與抵達機場": {
+  "en": "Select departure and arrival airports",
+  "ja": "出発空港と到着空港を選んでください"
+ },
+ "貼上座標,例如 25.033, 121.564": {
+  "en": "Paste coordinates, e.g. 25.033, 121.564",
+  "ja": "座標を貼り付け(例:25.033, 121.564)"
+ },
+ "走過去(以下方交通方式從目前位置前往)": {
+  "en": "Travel there (using the transport below, from current position)",
+  "ja": "移動する(下の移動手段で現在位置から向かう)"
+ },
+ "起飛": {
+  "en": "Take Off",
+  "ja": "離陸"
+ },
+ "起飛前 %lld 分先傳送到出發機場": {
+  "en": "Teleport to departure airport %lld min before takeoff",
+  "ja": "離陸 %lld 分前に出発空港へ移動"
+ },
+ "起飛時間": {
+  "en": "Departure Time",
+  "ja": "出発時刻"
+ },
+ "超音速": {
+  "en": "Supersonic",
+  "ja": "超音速"
+ },
+ "跑步": {
+  "en": "Run",
+  "ja": "ランニング"
+ },
+ "距目前位置 %@": {
+  "en": "%@ from current position",
+  "ja": "現在位置から %@"
+ },
+ "跟隨": {
+  "en": "Follow",
+  "ja": "追従"
+ },
+ "跟隨系統": {
+  "en": "Follow System",
+  "ja": "システムに従う"
+ },
+ "路線": {
+  "en": "Route",
+  "ja": "ルート"
+ },
+ "路線 %lld": {
+  "en": "Route %lld",
+  "ja": "ルート %lld"
+ },
+ "路線名稱": {
+  "en": "Route name",
+  "ja": "ルート名"
+ },
+ "路線長度為 0": {
+  "en": "Route length is 0",
+  "ja": "ルートの長さが 0 です"
+ },
+ "軌跡 %lld 點": {
+  "en": "Trail: %lld points",
+  "ja": "軌跡 %lld 点"
+ },
+ "逆時針": {
+  "en": "Counterclockwise",
+  "ja": "反時計回り"
+ },
+ "途中停留": {
+  "en": "Stop at waypoints",
+  "ja": "経由点で停止"
+ },
+ "這兩地沒有定期直飛航班": {
+  "en": "No scheduled direct flights between these airports",
+  "ja": "この2空港間に定期直行便はありません"
+ },
+ "速度": {
+  "en": "Speed",
+  "ja": "速度"
+ },
+ "速度曲線:起飛 → 爬升 → 巡航 → 下降 → 降落。路徑為大圓航線,真實航班會因風與空域略有繞行。": {
+  "en": "Speed profile: takeoff → climb → cruise → descent → landing. The path is a great-circle route; real flights deviate slightly for wind and airspace.",
+  "ja": "速度プロファイル:離陸 → 上昇 → 巡航 → 降下 → 着陸。経路は大圏航路です。実際の便は風や空域のため多少迂回します。"
+ },
+ "速度起伏": {
+  "en": "Speed variation",
+  "ja": "速度のばらつき"
+ },
+ "連續 %lld 次送出失敗,已停止。請確認 iPhone 已解鎖且在同一網路": {
+  "en": "Failed %lld times in a row and stopped. Make sure the iPhone is unlocked and on the same network",
+  "ja": "%lld 回連続で送信に失敗したため停止しました。iPhone のロックを解除し、同じネットワークに接続されているか確認してください"
+ },
+ "進階": {
+  "en": "Advanced",
+  "ja": "詳細設定"
+ },
+ "選取": {
+  "en": "Selected",
+  "ja": "選択"
+ },
+ "還原": {
+  "en": "Restore",
+  "ja": "元に戻す"
+ },
+ "還原失敗,請看紀錄": {
+  "en": "Restore failed; see the log",
+  "ja": "復元に失敗しました。ログを確認してください"
+ },
+ "還原真實定位": {
+  "en": "Restore Real Location",
+  "ja": "実際の位置情報に戻す"
+ },
+ "重新整理": {
+  "en": "Refresh",
+  "ja": "更新"
+ },
+ "重複 %lld 圈": {
+  "en": "Repeat %lld lap(s)",
+  "ja": "%lld 周繰り返す"
+ },
+ "重複:無限": {
+  "en": "Repeat: unlimited",
+  "ja": "繰り返し:無制限"
+ },
+ "開始 / 暫停 / 繼續": {
+  "en": "Start / Pause / Resume",
+  "ja": "開始 / 一時停止 / 再開"
+ },
+ "開始漫遊": {
+  "en": "Start Wandering",
+  "ja": "散策開始"
+ },
+ "開始環繞": {
+  "en": "Start Orbit",
+  "ja": "周回開始"
+ },
+ "開始移動": {
+  "en": "Start Moving",
+  "ja": "移動開始"
+ },
+ "開機啟動設定失敗:%@": {
+  "en": "Failed to set launch at login: %@",
+  "ja": "ログイン時の起動設定に失敗しました:%@"
+ },
+ "開機自動啟動": {
+  "en": "Launch at login",
+  "ja": "ログイン時に起動"
+ },
+ "開源授權:MIT License": {
+  "en": "Open source under the MIT License",
+  "ja": "オープンソース(MIT License)"
+ },
+ "闔上螢幕也不睡眠": {
+  "en": "Stay awake with lid closed",
+  "ja": "画面を閉じてもスリープしない"
+ },
+ "關於 Location Spoofer": {
+  "en": "About Location Spoofer",
+  "ja": "Location Spoofer について"
+ },
+ "防止閒置睡眠": {
+  "en": "Prevent idle sleep",
+  "ja": "アイドル時のスリープを防止"
+ },
+ "隨機漫遊": {
+  "en": "Random Wander",
+  "ja": "ランダム散策"
+ },
+ "隨機附近": {
+  "en": "Random Nearby",
+  "ja": "近くのランダム地点"
+ },
+ "雪梨歌劇院": {
+  "en": "Sydney Opera House",
+  "ja": "シドニー・オペラハウス"
+ },
+ "順時針": {
+  "en": "Clockwise",
+  "ja": "時計回り"
+ },
+ "預約喚醒失敗:%@": {
+  "en": "Failed to schedule wake: %@",
+  "ja": "スリープ解除の予約に失敗しました:%@"
+ },
+ "預約飛行排程": {
+  "en": "Scheduled flight plan",
+  "ja": "フライト予約スケジュール"
+ },
+ "預計": {
+  "en": "ETA",
+  "ja": "到着予定"
+ },
+ "顯示主視窗": {
+  "en": "Show Main Window",
+  "ja": "メインウインドウを表示"
+ },
+ "飛行": {
+  "en": "Flight",
+  "ja": "フライト"
+ },
+ "飛行中 · 剩 %@ · 預計 %@ 落地": {
+  "en": "In flight · %@ left · lands at %@",
+  "ja": "飛行中 · 残り %@ · %@ 着陸予定"
+ },
+ "飛行時間": {
+  "en": "Flight Duration",
+  "ja": "飛行時間"
+ },
+ "飛行約 %@": {
+  "en": "Flight time ≈ %@",
+  "ja": "飛行時間 約 %@"
+ },
+ "首爾塔": {
+  "en": "N Seoul Tower",
+  "ja": "Nソウルタワー"
+ },
+ "香港中環": {
+  "en": "Central, Hong Kong",
+  "ja": "香港・セントラル"
+ },
+ "高速公路": {
+  "en": "Highway",
+  "ja": "高速道路"
+ },
+ "高鐵": {
+  "en": "HSR",
+  "ja": "高速鉄道"
+ },
+ "點地圖加入路徑點(%lld 個);拖曳編號圓點可移動,右鍵可刪除": {
+  "en": "Click the map to add waypoints (%lld); drag a numbered dot to move it, right-click to delete",
+  "ja": "地図をクリックして経由点を追加(%lld 個)。番号の点をドラッグで移動、右クリックで削除"
+ },
+ "點地圖或搜尋以選擇位置": {
+  "en": "Click the map or search to choose a location",
+  "ja": "地図をクリックするか検索して場所を選択"
+ },
+ "點地圖設定中心,在半徑內隨機走動": {
+  "en": "Click the map to set the center; wander randomly within the radius",
+  "ja": "地図をクリックして中心を設定し、半径内をランダムに歩きます"
+ },
+ "點地圖設定圓心,以半徑繞圈": {
+  "en": "Click the map to set the center; orbit it at the given radius",
+  "ja": "地図をクリックして中心を設定し、半径で周回します"
+ }
+}
