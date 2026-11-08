@@ -1,5 +1,5 @@
 #!/bin/zsh
-# 建置 LocationSpoofer.app(release)。用法: ./build_app.sh
+# Builds LocationSpoofer.app (release). Usage: ./build_app.sh   (UNIVERSAL=1 for arm64 + x86_64, VERSION=x.y.z to set the version)
 set -e
 cd "$(dirname "$0")"
 

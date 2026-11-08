@@ -1,6 +1,6 @@
 import Foundation
 
-/// 專案資訊:關於視窗、README 共用。
+/// Project info shared by the About window and the README.
 enum AppInfo {
     static let name = "Location Spoofer"
     static let author = "Jundazhu"

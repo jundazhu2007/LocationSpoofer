@@ -1,11 +1,11 @@
 import SwiftUI
 
-/// 移動引擎:依「真實經過時間 × 速度」計算位置,不受 devicectl 延遲影響。
+/// Movement engine: computes position from real elapsed time × speed, independent of devicectl latency.
 @MainActor @Observable
 final class MovementController {
     enum State: Equatable { case idle, preparing, running, paused }
 
-    // MARK: 設定
+    // MARK: Settings
     var mode: MovementMode = .teleport
     var transport: Transport = .walk {
         didSet { if transport != .custom { speedKmh = transport.defaultKmh }; invalidateTrack() }
@@ -13,26 +13,26 @@ final class MovementController {
     var speedKmh: Double = 5
     var speedJitterPct: Double = 0
     var gpsJitterMeters: Double = 0
-    var smoothMotion = true          // 平滑起步 / 煞車
-    var dwellSeconds: Double = 0     // 每個路徑點停留秒數(0 = 不停)
-    var repeatCount = 0              // 循環 / 往返圈數(0 = 無限)
+    var smoothMotion = true          // Smooth acceleration / braking
+    var dwellSeconds: Double = 0     // Seconds to stop at each waypoint (0 = don't stop)
+    var repeatCount = 0              // Laps for loop / round trip (0 = unlimited)
     var loop: LoopMode = .once { didSet { invalidateTrack() } }
     var followRoads = true { didSet { invalidateTrack() } }
     var startFromCurrent = true { didSet { invalidateTrack() } }
     var waypoints: [Coordinate] = [] { didSet { invalidateTrack() } }
-    var anchor: Coordinate?          // 環繞 / 漫遊的中心
-    var radius: Double = 200         // 公尺
+    var anchor: Coordinate?          // Center for orbit / wander
+    var radius: Double = 200         // Meters
     var clockwise = true
-    var joystick: CGVector = .zero   // dx 向東、dy 向北,-1...1
+    var joystick: CGVector = .zero   // dx east, dy north, -1...1
     var flightOrigin: Airport?
     var flightDest: Airport?
     var cruiseKmh: Double = 850
-    var timeScale: Double = 1        // 時間加速倍率
-    /// 設定後,飛行會自動調整巡航速度,使飛機在此時刻落地(固定航班用,可隨時更新以套用誤點)。
+    var timeScale: Double = 1        // Time-scale multiplier
+    /// When set, the flight adjusts its cruise speed automatically to land at this time (for scheduled flights; update it any time to apply a delay).
     var flightDeadline: Date?
     var now: @MainActor () -> Date = { Date() }
 
-    // MARK: 狀態
+    // MARK: State
     private(set) var state: State = .idle
     private(set) var track: PathTrack?
     private(set) var current: Coordinate?
@@ -41,7 +41,7 @@ final class MovementController {
     private(set) var laps = 0
     private(set) var progress: Double = 0
     private(set) var message = ""
-    /// 最近一次飛行 / 路線是否正常抵達終點(排程器據此判斷落地,不依賴文字)。
+    /// Whether the last flight / route reached its end normally (the scheduler uses this to detect landing, not message text).
     private(set) var arrived = false
     private(set) var currentSpeedKmh: Double = 0
     private(set) var dwellRemaining: Double = 0
@@ -59,7 +59,7 @@ final class MovementController {
     private var lastD = 0.0
     private var lastTick = Date()
 
-    // MARK: 衍生資訊
+    // MARK: Derived info
     var isActive: Bool { state == .running || state == .paused || state == .preparing }
     var displayPath: [Coordinate] {
         if mode == .flight {
@@ -99,13 +99,13 @@ final class MovementController {
         dwellRemaining + Double(stops.filter { $0 > lastD }.count) * dwellSeconds
     }
 
-    // MARK: 路徑點編輯
-    var smartInsert = false          // 點地圖時插入最近的線段,而不是加在最後
+    // MARK: Waypoint editing
+    var smartInsert = false          // Clicking the map inserts into the nearest segment instead of appending
 
     func addWaypoint(_ c: Coordinate) {
         guard smartInsert, waypoints.count >= 2 else { waypoints.append(c); return }
-        // 比較:加在最前 / 最後 / 插入各線段 的額外距離
-        var best = (cost: c.distance(to: waypoints[0]), index: 0)                      // 加在最前
+        // Compare the extra distance of: prepending / appending / inserting into each segment
+        var best = (cost: c.distance(to: waypoints[0]), index: 0)                      // Prepend
         let tail = waypoints[waypoints.count - 1].distance(to: c)
         if tail < best.cost { best = (tail, waypoints.count) }
         for i in 0..<(waypoints.count - 1) {
@@ -119,7 +119,7 @@ final class MovementController {
     func moveWaypoint(_ i: Int, to c: Coordinate) { if waypoints.indices.contains(i) { waypoints[i] = c } }
     func removeWaypoint(_ i: Int) { if waypoints.indices.contains(i) { waypoints.remove(at: i) } }
 
-    // MARK: 控制
+    // MARK: Control
     func teleport(to c: Coordinate) {
         stop()
         current = c
@@ -188,7 +188,7 @@ final class MovementController {
 
     private func invalidateTrack() { if state == .idle { track = nil; stops = [] } }
 
-    // MARK: 迴圈
+    // MARK: Loop
     private func begin() {
         state = .running
         task?.cancel()
@@ -232,7 +232,7 @@ final class MovementController {
             goal = FlightProfile.speedKmh(at: traveled, total: t.total, cruise: cruiseInUse) / 3.6 * (1 + speedNoise) * scale
             actualSpeed = goal
         } else if smoothMotion {
-            let accel = min(max(target / 10, 0.5), 8)            // 約 10 秒加速到目標速度
+            let accel = min(max(target / 10, 0.5), 8)            // About 10 s to reach the target speed
             if mode == .route, loop == .once, let r = remaining { goal = min(target, max(0.5, sqrt(2 * accel * r))) }
             actualSpeed = goal > actualSpeed ? min(goal, max(actualSpeed, 0.3) + accel * dt) : goal
         } else { actualSpeed = goal }
@@ -270,7 +270,7 @@ final class MovementController {
         var (d, reversed) = fold(traveled, total: total)
         laps = Int(traveled / period)
 
-        // 途中停留:若這一步跨過某個路徑點,就停在該點
+        // Dwell: if this step crosses a waypoint, stop at it
         if !finished, dwellSeconds > 0, abs(d - lastD) < total / 2 {
             let forward = d >= lastD
             let hit = stops.filter { forward ? ($0 > lastD && $0 <= d) : ($0 < lastD && $0 >= d) }

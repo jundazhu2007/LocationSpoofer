@@ -64,7 +64,7 @@ enum Transport: String, CaseIterable, Identifiable, Codable, Sendable {
         case .custom: "slider.horizontal.3"
         }
     }
-    /// 預設速度 km/h
+    /// Default speed in km/h
     var defaultKmh: Double {
         switch self {
         case .walk: 5
@@ -109,7 +109,7 @@ struct SavedRoute: Identifiable, Codable, Hashable, Sendable {
     var waypoints: [Coordinate]
 }
 
-/// 固定航班:每週重複或單次。時間一律使用 Mac 的本地時區。
+/// Scheduled flight: weekly or one-time. All times use the Mac's local time zone.
 struct ScheduledFlight: Identifiable, Codable, Hashable, Sendable {
     var id = UUID()
     var flightNumber = ""
@@ -117,17 +117,17 @@ struct ScheduledFlight: Identifiable, Codable, Hashable, Sendable {
     var destination = ""            // IATA
     var hour = 8
     var minute = 0
-    var weekdays: Set<Int> = []     // Calendar weekday:1=週日 … 7=週六;空 = 單次
-    var oneOffDate: Date?           // 單次航班的日期
-    var durationMinutes = 120       // 表定飛行時間(起飛到落地)
-    var delayMinutes = 0            // 誤點分鐘數:可隨時修改,立即套用
-    var boardingLeadMinutes = 20    // 起飛前幾分鐘先傳送到出發機場
-    var restoreAfterLandingMinutes = 0   // 落地後幾分鐘還原真實定位(0 = 保留在目的地)
+    var weekdays: Set<Int> = []     // Calendar weekday: 1 = Sunday … 7 = Saturday; empty = one-time
+    var oneOffDate: Date?           // Date of a one-time flight
+    var durationMinutes = 120       // Scheduled duration (takeoff to landing)
+    var delayMinutes = 0            // Delay in minutes: editable any time, applies immediately
+    var boardingLeadMinutes = 20    // Minutes before takeoff to teleport to the departure airport
+    var restoreAfterLandingMinutes = 0   // Minutes after landing to restore the real location (0 = stay at destination)
     var enabled = true
 
     var title: String { flightNumber.isEmpty ? "\(origin) → \(destination)" : "\(flightNumber)  \(origin) → \(destination)" }
 
-    /// 在 start 前一天到之後 days 天內,所有「表定起飛時刻」。
+    /// All scheduled departure times from one day before `start` to `days` days after it.
     func occurrences(from start: Date, days: Int = 8) -> [Date] {
         let cal = Calendar.current
         var out: [Date] = []

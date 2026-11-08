@@ -3,8 +3,8 @@ import SwiftUI
 import MapKit
 import ScreenCaptureKit
 
-/// 展示 / 截圖模式:僅在設定環境變數 `LS_SCREENSHOT_DIR` 時啟用。
-/// 不連接任何裝置、不寫入收藏檔;擺好幾個畫面並把自己的視窗存成 PNG,供文件使用。
+/// Demo / screenshot mode: only enabled when the `LS_SCREENSHOT_DIR` environment variable is set.
+/// Never touches a device or saved data; sets up a few screens and saves its own window as PNG for the docs.
 ///
 ///   LS_SCREENSHOT_DIR=out LS_LANG=en LocationSpoofer.app/Contents/MacOS/LocationSpoofer
 @MainActor
@@ -15,11 +15,11 @@ enum ScreenshotRunner {
 
     static func run(model: AppModel, dir: URL) async {
         let lang = ProcessInfo.processInfo.environment["LS_LANG"] ?? "en"
-        let only = ProcessInfo.processInfo.environment["LS_ONLY"]      // 例如 4-about;未設定則全部拍
+        let only = ProcessInfo.processInfo.environment["LS_ONLY"]      // e.g. 4-about; when unset, capture everything
         func want(_ n: String) -> Bool { only == nil || only == n }
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
 
-        // 展示用狀態:不碰真實裝置與使用者資料
+        // Demo state: never touch a real device or user data
         model.demo = true
         model.language.persistsChanges = false
         model.language.selection = AppLanguage(rawValue: lang) ?? .en
@@ -33,7 +33,7 @@ enum ScreenshotRunner {
         NSApp.activate(ignoringOtherApps: true)
         try? await Task.sleep(for: .seconds(3))
 
-        // 1. 定點
+        // 1. Teleport
         if want("1-teleport") {
         model.controller.mode = .teleport
         model.reveal(Coordinate(latitude: 25.033964, longitude: 121.564468), zoom: 1600)
@@ -41,7 +41,7 @@ enum ScreenshotRunner {
         await shoot(window, dir, lang, "1-teleport", wait: 6)
         }
 
-        // 2. 路線(沿道路,執行中)
+        // 2. Route (along roads, running)
         if want("2-route") {
         model.controller.stop()
         model.controller.mode = .route
@@ -56,7 +56,7 @@ enum ScreenshotRunner {
         await shoot(window, dir, lang, "2-route", wait: 12)
         }
 
-        // 3. 固定航班 + 飛行(第一班已在空中)
+        // 3. Scheduled flights + flight (the first flight is already airborne)
         if want("3-flight") {
         model.controller.stop()
         model.controller.timeScale = 1
@@ -66,7 +66,7 @@ enum ScreenshotRunner {
         await shoot(window, dir, lang, "3-flight", wait: 8)
         }
 
-        // 4. 關於視窗
+        // 4. About window
         AboutPanel.show()
         try? await Task.sleep(for: .seconds(2))
         if let about = NSApp.windows.first(where: { $0 !== window && $0.isVisible && $0.styleMask.contains(.titled) && $0.frame.width < 700 }) {
@@ -77,7 +77,7 @@ enum ScreenshotRunner {
         NSApp.terminate(nil)
     }
 
-    /// 第一班「已起飛 40 分鐘」(會在空中),第二班 2 小時後起飛且誤點 20 分,第三班停用。
+    /// Flight 1 "departed 40 min ago" (airborne), flight 2 departs in 2 h with a 20 min delay, flight 3 is disabled.
     static func demoFlights(enabled: Bool) -> [ScheduledFlight] {
         let cal = Calendar.current
         let now = Date()
@@ -105,13 +105,13 @@ enum ScreenshotRunner {
 
     private static func shoot(_ window: NSWindow, _ dir: URL, _ lang: String, _ name: String, wait: Double, resize: Bool = true) async {
         try? await Task.sleep(for: .seconds(wait))
-        // 固定視窗大小,讓每張截圖尺寸一致
+        // Fix the window size so every screenshot has the same dimensions
         if resize {
             window.setContentSize(NSSize(width: 1440, height: 900))
             try? await Task.sleep(for: .seconds(1))
         }
 
-        // 以系統合成結果擷取(含玻璃材質與地圖),只擷取自己的視窗。第一次可能需要先授權,所以重試。
+        // Capture the composited window (glass material and map included), own window only. Retry because the first run may need permission.
         for attempt in 1...4 {
             do {
                 let content = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: true)

@@ -16,7 +16,7 @@ struct LocationSpooferApp: App {
             ContentView()
                 .environment(model)
                 .environment(\.locale, model.language.locale)
-                .id(model.language.revision)          // 切換語言時重建畫面,所有文字立即更新
+                .id(model.language.revision)          // Rebuild the view when the language changes so every string updates immediately
                 .frame(minWidth: 980, minHeight: 640)
                 .task {
                     delegate.model = model

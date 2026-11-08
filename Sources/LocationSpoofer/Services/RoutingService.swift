@@ -4,7 +4,7 @@ struct RouteBuildResult {
     var track: PathTrack
     var roadLegs = 0
     var fallbackLegs = 0
-    var stops: [Double] = []   // 中間路徑點在路線上的距離(公尺)
+    var stops: [Double] = []   // Distance of each intermediate waypoint along the route (meters)
 }
 
 @MainActor

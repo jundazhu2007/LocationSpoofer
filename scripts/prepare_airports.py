@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""把 OpenFlights 的原始資料整理成 app 內建的精簡格式。
+"""Turns the raw OpenFlights data into the compact format bundled with the app.
 
   mkdir raw && cd raw
   curl -O https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat
   curl -O https://raw.githubusercontent.com/jpatokal/openflights/master/data/routes.dat
   cd .. && python3 -I scripts/prepare_airports.py raw Resources
 
-只保留有定期航班的機場,以及不經停(Stops == 0)的直飛航線。
-資料來源與授權見 THIRD_PARTY_NOTICES.md(ODbL)。
+Keeps only airports with scheduled service and non-stop (Stops == 0) routes.
+Data source and license: see THIRD_PARTY_NOTICES.md (ODbL).
 """
 import csv, sys, collections
 raw, out = sys.argv[1], sys.argv[2]

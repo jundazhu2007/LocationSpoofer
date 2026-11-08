@@ -4,7 +4,7 @@ private enum TimeFmt {
     private static var locale: Locale { Locale(identifier: Localizer.shared.code) }
     static var hm: DateFormatter { let f = DateFormatter(); f.dateFormat = "HH:mm"; return f }
     static var date: DateFormatter { let f = DateFormatter(); f.locale = locale; f.dateFormat = "M/d (E)"; return f }
-    /// 星期名稱(Calendar weekday 1 = 週日)。中文 / 日文用單字,英文用縮寫。
+    /// Weekday name (Calendar weekday 1 = Sunday). One character for Chinese / Japanese, abbreviation for English.
     static func weekdayName(_ weekday: Int) -> String {
         let f = DateFormatter(); f.locale = locale
         let symbols = Localizer.shared.code == "en" ? f.shortWeekdaySymbols : f.veryShortWeekdaySymbols

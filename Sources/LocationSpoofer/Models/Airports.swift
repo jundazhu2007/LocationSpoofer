@@ -10,7 +10,7 @@ struct Airport: Identifiable, Hashable, Sendable {
     var title: String { "\(iata) · \(city)" }
 }
 
-/// 機場與直飛航線資料庫(資料來源:OpenFlights,ODbL)。
+/// Airport and direct-route database (source: OpenFlights, ODbL).
 struct AirportDB: Sendable {
     let airports: [Airport]
     private let byIATA: [String: Airport]
@@ -49,7 +49,7 @@ struct AirportDB: Sendable {
         return s
     }
 
-    // l10n:ignore-begin  (中文搜尋別名,不是介面文字)
+    // l10n:ignore-begin  (Chinese search aliases, not UI text)
     private static let aliases: [String: [String]] = [
         "台北": ["TPE", "TSA"], "桃園": ["TPE"], "松山": ["TSA"], "高雄": ["KHH"], "台中": ["RMQ"], "台南": ["TNN"], "花蓮": ["HUN"],
         "金門": ["KNH"], "澎湖": ["MZG"], "馬祖": ["MFK"], "台東": ["TTT"],
@@ -70,7 +70,7 @@ struct AirportDB: Sendable {
 
     // l10n:ignore-end
 
-    /// 以 IATA、城市、機場名稱或中文城市名搜尋。
+    /// Search by IATA code, city, airport name, or Chinese city name.
     func search(_ query: String, from origin: Airport? = nil, directOnly: Bool = false, limit: Int = 8) -> [Airport] {
         let q = query.trimmingCharacters(in: .whitespaces)
         guard !q.isEmpty else { return [] }
@@ -96,7 +96,7 @@ struct AirportDB: Sendable {
     }
 }
 
-/// 客機的速度曲線:起飛滑行 → 爬升 → 巡航 → 下降 → 降落。
+/// Airliner speed profile: takeoff roll → climb → cruise → descent → landing.
 enum FlightProfile {
     static func speedKmh(at d: Double, total: Double, cruise: Double) -> Double {
         let roll = min(3_000, total * 0.02)
@@ -110,7 +110,7 @@ enum FlightProfile {
         return cruise
     }
 
-    /// 從 start 公尺處飛到終點所需秒數(數值積分)。
+    /// Seconds needed to fly from `start` meters to the end (numerical integration).
     static func duration(total: Double, cruise: Double, from start: Double = 0) -> Double {
         guard total > start else { return 0 }
         var d = start, t = 0.0
@@ -123,7 +123,7 @@ enum FlightProfile {
         return t
     }
 
-    /// 起飛後經過 elapsed 秒時,已飛行的距離(公尺)。
+    /// Distance flown (meters) after `elapsed` seconds since takeoff.
     static func distance(afterElapsed elapsed: Double, total: Double, cruise: Double) -> Double {
         var d = 0.0, t = 0.0
         let dt = 1.0
@@ -134,7 +134,7 @@ enum FlightProfile {
         return min(d, total)
     }
 
-    /// 反解巡航速度,使「從 start 飛到終點」恰好花 seconds 秒。結果限制在 400...1500 km/h。
+    /// Solves for the cruise speed so that flying from `start` to the end takes exactly `seconds`. Clamped to 400...1500 km/h.
     static func solveCruise(total: Double, seconds: Double, from start: Double = 0) -> (cruise: Double, feasible: Bool) {
         var lo = 400.0, hi = 1500.0
         if duration(total: total, cruise: hi, from: start) > seconds { return (hi, false) }

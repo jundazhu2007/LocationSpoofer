@@ -1,6 +1,6 @@
 #!/usr/bin/env swift
-// 產生 Resources/AppIcon.icns(macOS 26 風格:連續圓角、層次與玻璃高光)。
-// 用法: swift scripts/make_icon.swift [輸出資料夾]   預設為 Resources
+// Generates Resources/AppIcon.icns (macOS 26 style: continuous corners, layers and glass highlights).
+// Usage: swift scripts/make_icon.swift [output folder]   defaults to Resources
 import AppKit
 
 let outDir = URL(fileURLWithPath: CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : "Resources", isDirectory: true)
@@ -10,7 +10,7 @@ func rgb(_ hex: UInt32, _ a: CGFloat = 1) -> NSColor {
     NSColor(srgbRed: CGFloat((hex >> 16) & 255) / 255, green: CGFloat((hex >> 8) & 255) / 255, blue: CGFloat(hex & 255) / 255, alpha: a)
 }
 
-/// 超橢圓(連續圓角),macOS 圖示的外形。
+/// Superellipse (continuous corners): the shape of a macOS icon.
 func squircle(_ rect: CGRect, n: CGFloat = 5) -> CGPath {
     let p = CGMutablePath()
     let a = rect.width / 2, b = rect.height / 2, cx = rect.midX, cy = rect.midY
@@ -42,22 +42,22 @@ func render() -> NSBitmapImageRep {
     let body = CGRect(x: 100, y: 100, width: 824, height: 824)
     let shape = squircle(body)
 
-    // 1) 柔和落影(系統圖示慣例)
+    // 1) Soft drop shadow (system icon convention)
     ctx.saveGState()
     ctx.setShadow(offset: CGSize(width: 0, height: -12), blur: 26, color: rgb(0x0A1B4D, 0.30).cgColor)
     ctx.addPath(shape); ctx.setFillColor(rgb(0x1747D6).cgColor); ctx.fillPath()
     ctx.restoreGState()
 
-    // 2) 裁切到外形,畫底色漸層(天空藍 → 深藍)
+    // 2) Clip to the shape and draw the base gradient (sky blue → deep blue)
     ctx.saveGState()
     ctx.addPath(shape); ctx.clip()
     ctx.drawLinearGradient(gradient([rgb(0x55C2FF), rgb(0x1E73F0), rgb(0x1A3FC4)], [0, 0.5, 1]),
                            start: CGPoint(x: 330, y: 930), end: CGPoint(x: 700, y: 100), options: [.drawsBeforeStartLocation, .drawsAfterEndLocation])
-    // 左上角柔光
+    // Soft glow in the upper left
     ctx.drawRadialGradient(gradient([rgb(0xFFFFFF, 0.38), rgb(0xFFFFFF, 0)]), startCenter: CGPoint(x: 300, y: 860), startRadius: 0,
                            endCenter: CGPoint(x: 300, y: 860), endRadius: 560, options: [])
 
-    // 3) 地球經緯線(淡)
+    // 3) Globe meridians and parallels (faint)
     ctx.setStrokeColor(rgb(0xFFFFFF, 0.14).cgColor); ctx.setLineWidth(7)
     let globe = CGRect(x: 160, y: 130, width: 704, height: 704)
     ctx.strokeEllipse(in: globe)
@@ -67,7 +67,7 @@ func render() -> NSBitmapImageRep {
         ctx.strokeEllipse(in: CGRect(x: 512 - w / 2, y: 482 + dy - 34, width: w, height: 68))
     }
 
-    // 4) 航跡:大圓虛線,從左下飛向圖釘
+    // 4) Flight trail: dotted great circle from the lower left toward the pin
     ctx.saveGState()
     ctx.setStrokeColor(rgb(0xFFFFFF, 0.7).cgColor); ctx.setLineWidth(15); ctx.setLineCap(.round)
     ctx.setLineDash(phase: 0, lengths: [1, 38])
@@ -77,10 +77,10 @@ func render() -> NSBitmapImageRep {
     ctx.addPath(trail); ctx.strokePath()
     ctx.restoreGState()
 
-    // 5) 圖釘(玻璃白):水滴外形 + 內孔
+    // 5) Pin (glass white): teardrop shape + inner hole
     let cx: CGFloat = 560, cy: CGFloat = 520, r: CGFloat = 178
     let tipDist: CGFloat = 330
-    let tangent = acos(r / tipDist)                      // 圓心看向尖端時,兩條切線的夾角
+    let tangent = acos(r / tipDist)                      // Angle between the two tangents as seen from the circle center toward the tip
     let aRight = -CGFloat.pi / 2 + tangent, aLeft = -CGFloat.pi / 2 - tangent
     let tip = CGPoint(x: cx, y: cy - tipDist)
     let pin = CGMutablePath()
@@ -93,9 +93,9 @@ func render() -> NSBitmapImageRep {
     ctx.addPath(pin); ctx.clip()
     ctx.drawLinearGradient(gradient([rgb(0xFFFFFF), rgb(0xD6EBFF)]), start: CGPoint(x: cx, y: cy + r), end: CGPoint(x: cx, y: cy - tipDist), options: [.drawsBeforeStartLocation, .drawsAfterEndLocation])
     ctx.restoreGState()
-    // 外框高光
+    // Outline highlight
     ctx.addPath(pin); ctx.setStrokeColor(rgb(0xFFFFFF, 0.9).cgColor); ctx.setLineWidth(4); ctx.setLineJoin(.round); ctx.strokePath()
-    // 內孔:深藍玻璃
+    // Inner hole: deep blue glass
     let hole = CGRect(x: cx - 84, y: cy - 84, width: 168, height: 168)
     ctx.saveGState()
     ctx.addEllipse(in: hole); ctx.clip()
@@ -103,7 +103,7 @@ func render() -> NSBitmapImageRep {
     ctx.restoreGState()
     ctx.setStrokeColor(rgb(0xFFFFFF, 0.55).cgColor); ctx.setLineWidth(5); ctx.strokeEllipse(in: hole)
 
-    // 6) 飛機(SF Symbol,白色)飛在圖釘右上方
+    // 6) Airplane (SF Symbol, white) flying to the upper right of the pin
     if let base = NSImage(systemSymbolName: "airplane", accessibilityDescription: nil),
        let sym = base.withSymbolConfiguration(.init(pointSize: 170, weight: .bold)) {
         let size = sym.size
@@ -119,12 +119,12 @@ func render() -> NSBitmapImageRep {
         ctx.restoreGState()
     }
 
-    // 7) 玻璃高光:上半部由亮到透明的柔和反光(不留硬邊)
+    // 7) Glass highlight: soft reflection fading from bright to transparent on the top half (no hard edge)
     ctx.drawLinearGradient(gradient([rgb(0xFFFFFF, 0.26), rgb(0xFFFFFF, 0.08), rgb(0xFFFFFF, 0.0)], [0, 0.45, 1]),
                            start: CGPoint(x: 512, y: 930), end: CGPoint(x: 512, y: 520), options: [.drawsAfterEndLocation])
-    ctx.restoreGState()   // 結束外形裁切
+    ctx.restoreGState()   // End of the shape clip
 
-    // 8) 邊緣:內側亮邊 + 下緣暗邊
+    // 8) Edge: inner bright rim + darker bottom edge
     ctx.saveGState()
     ctx.addPath(shape); ctx.clip()
     ctx.addPath(shape); ctx.setStrokeColor(rgb(0xFFFFFF, 0.5).cgColor); ctx.setLineWidth(6); ctx.strokePath()

@@ -16,7 +16,7 @@ struct Coordinate: Equatable, Hashable, Sendable, Codable {
     var clCoordinate: CLLocationCoordinate2D { .init(latitude: latitude, longitude: longitude) }
     var isValid: Bool { (-90...90).contains(latitude) && (-180...180).contains(longitude) }
 
-    /// 兩點大圓距離(公尺)。
+    /// Great-circle distance between two points (meters).
     func distance(to o: Coordinate) -> Double {
         let p1 = latitude.rad, p2 = o.latitude.rad
         let dp = p2 - p1, dl = (o.longitude - longitude).rad
@@ -24,7 +24,7 @@ struct Coordinate: Equatable, Hashable, Sendable, Codable {
         return 2 * Self.earthRadius * asin(min(1, sqrt(a)))
     }
 
-    /// 初始方位角(弧度,北 = 0,順時針)。
+    /// Initial bearing (radians, north = 0, clockwise).
     func bearing(to o: Coordinate) -> Double {
         let p1 = latitude.rad, p2 = o.latitude.rad, dl = (o.longitude - longitude).rad
         let y = sin(dl) * cos(p2)
@@ -32,7 +32,7 @@ struct Coordinate: Equatable, Hashable, Sendable, Codable {
         return atan2(y, x)
     }
 
-    /// 朝某方位角(弧度)移動 distance 公尺後的座標。
+    /// Coordinate reached after moving `distance` meters along a bearing (radians).
     func moved(distance d: Double, bearing b: Double) -> Coordinate {
         let ang = d / Self.earthRadius
         let p1 = latitude.rad, l1 = longitude.rad
@@ -43,7 +43,7 @@ struct Coordinate: Equatable, Hashable, Sendable, Codable {
         return Coordinate(latitude: p2.deg, longitude: lon)
     }
 
-    /// 大圓上的內插(0...1)。
+    /// Interpolation along the great circle (0...1).
     func interpolated(to o: Coordinate, fraction f: Double) -> Coordinate {
         let d = distance(to: o) / Self.earthRadius
         guard d > 1e-9, d < .pi - 1e-9 else {
@@ -57,15 +57,15 @@ struct Coordinate: Equatable, Hashable, Sendable, Codable {
         return Coordinate(latitude: atan2(z, sqrt(x * x + y * y)).deg, longitude: atan2(y, x).deg)
     }
 
-    /// 在半徑內隨機偏移(模擬 GPS 抖動)。
+    /// Random offset within a radius (simulates GPS jitter).
     func jittered(meters: Double) -> Coordinate {
         guard meters > 0 else { return self }
         return moved(distance: Double.random(in: 0...meters), bearing: Double.random(in: 0..<(2 * .pi)))
     }
 
-    /// 解析「25.03, 121.56」之類的貼上文字。
+    /// Parses pasted text such as "25.03, 121.56".
     static func parse(_ text: String) -> Coordinate? {
-        // Google Maps 分享連結: ...!3d25.03!4d121.56
+        // Google Maps share link: ...!3d25.03!4d121.56
         if let m = text.firstMatch(of: /!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/),
            let la = Double(m.1), let lo = Double(m.2) {
             let c = Coordinate(latitude: la, longitude: lo)
@@ -78,7 +78,7 @@ struct Coordinate: Equatable, Hashable, Sendable, Codable {
     }
 }
 
-/// 折線路徑,可依「已行進距離」取樣位置與方向。每段以大圓內插。
+/// Polyline that can be sampled for position and heading by "distance traveled". Each segment is interpolated along a great circle.
 struct PathTrack: Sendable {
     let points: [Coordinate]
     private let cumulative: [Double]

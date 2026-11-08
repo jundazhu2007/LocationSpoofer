@@ -1,14 +1,14 @@
 import Foundation
 
-/// 固定航班排程:到點自動登機(傳送到出發機場)、起飛、落地;誤點可隨時修改並立即套用。
+/// Scheduled flights: boards (teleports to the departure airport), departs and lands on time; delays can be edited any time and apply immediately.
 @MainActor @Observable
 final class FlightScheduler {
     enum Phase: Equatable { case waiting, boarding, airborne, none }
     struct Status {
         var phase: Phase
-        var scheduled: Date?       // 表定起飛
-        var departure: Date?       // 實際起飛(含誤點)
-        var arrival: Date?         // 預計落地(含誤點)
+        var scheduled: Date?       // Scheduled departure
+        var departure: Date?       // Actual departure (including delay)
+        var arrival: Date?         // Expected landing (including delay)
     }
     struct Running { let flightID: UUID; let key: String; let scheduled: Date }
 
@@ -50,7 +50,7 @@ final class FlightScheduler {
 
         if let r = restoreAt, t >= r { restoreAt = nil; onLog?(L("落地後時間到,還原真實定位")); onClear?() }
 
-        // 飛行中:持續套用最新的誤點資訊,並偵測落地
+        // In flight: keep applying the latest delay and detect landing
         if let run = running {
             guard let f = flights.first(where: { $0.id == run.flightID }), f.enabled else {
                 controller.stop(); handled.insert(run.key); running = nil
@@ -66,13 +66,13 @@ final class FlightScheduler {
             }
             return
         }
-        if controller.isActive { return }   // 使用者正在手動操作
+        if controller.isActive { return }   // The user is operating manually
 
         for f in flights where f.enabled {
             for s in f.occurrences(from: t) {
                 let k = key(f, s)
                 if handled.contains(k) { continue }
-                if t >= arrive(f, s) { handled.insert(k); continue }          // 整班都錯過了
+                if t >= arrive(f, s) { handled.insert(k); continue }          // The whole flight was missed
                 if t >= depart(f, s) { startFlight(f, s, k, elapsed: t.timeIntervalSince(depart(f, s))); return }
                 if t >= depart(f, s).addingTimeInterval(-Double(f.boardingLeadMinutes) * 60), boardingKey != k { board(f, k) }
             }
@@ -99,7 +99,7 @@ final class FlightScheduler {
         Task { await controller.start(fallbackOrigin: nil, flightElapsed: elapsed) }
     }
 
-    // MARK: 顯示用
+    // MARK: Display
     func status(of f: ScheduledFlight) -> Status {
         let t = now()
         if let r = running, r.flightID == f.id {
@@ -113,7 +113,7 @@ final class FlightScheduler {
         return .init(phase: .none, scheduled: nil, departure: nil, arrival: nil)
     }
 
-    /// 下一個該喚醒 Mac 的時間(登機前 2 分鐘)。
+    /// The next time the Mac should wake (2 minutes before boarding).
     func nextWakeDate() -> Date? {
         let t = now()
         return flights.filter(\.enabled).flatMap { f in

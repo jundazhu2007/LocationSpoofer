@@ -25,12 +25,12 @@ struct SearchResult: Identifiable {
 final class AppModel {
     enum Phase: Equatable { case idle, working, simulating, failed(String) }
 
-    // 裝置
+    // Devices
     var devices: [Device] = []
     var selectedDeviceID: Device.ID?
     var phase: Phase = .idle
 
-    // 地圖
+    // Map
     var picked: Coordinate? { didSet { if picked != oldValue { lookupAddress() } } }
     var pickedAddress = ""
     var syncAll = false
@@ -40,12 +40,12 @@ final class AppModel {
     var followCamera = false
     var mapDistance: Double = 2000
 
-    // 搜尋
+    // Search
     var searchText = ""
     var searchResults: [SearchResult] = []
     var coordinateText = ""
 
-    // 資料
+    // Data
     var library = LibraryData()
     var logText = ""
     var autoClearOnQuit: Bool = UserDefaults.standard.object(forKey: "autoClearOnQuit") as? Bool ?? true {
@@ -79,7 +79,7 @@ final class AppModel {
     private let service = DeviceService()
     private let sender = LocationSender()
     private let store = LibraryStore()
-    /// 截圖 / 展示模式:不連接任何裝置、不寫入收藏檔。
+    /// Screenshot / demo mode: connects to no device and never writes the library file.
     var demo = false
     private var pollTask: Task<Void, Never>?
     private var addrTask: Task<Void, Never>?
@@ -87,7 +87,7 @@ final class AppModel {
     private var sentOnce = false
 
     var selectedDevice: Device? { devices.first { $0.id == selectedDeviceID } }
-    /// 要送出定位的裝置(同步模式 = 所有已連線裝置)。
+    /// Devices to send the location to (sync mode = every connected device).
     var targets: [String] {
         if syncAll { let ids = devices.filter(\.isConnected).map(\.id); if !ids.isEmpty { return ids } }
         return selectedDeviceID.map { [$0] } ?? []
@@ -135,9 +135,9 @@ final class AppModel {
         }
     }
 
-    // MARK: 送出位置
+    // MARK: Sending locations
     private func push(_ c: Coordinate) {
-        if demo { phase = .simulating; return }     // 展示模式:不連接裝置
+        if demo { phase = .simulating; return }     // Demo mode: no device connection
         let udids = targets
         guard !udids.isEmpty else { log(L("沒有選擇裝置")); controller.stop(); return }
         if phase != .simulating { phase = .simulating }
@@ -152,7 +152,7 @@ final class AppModel {
         if ok { failures = 0; if case .failed = phase, controller.isActive { phase = .simulating }; if !sentOnce { sentOnce = true; log(L("已送出第一筆位置")) }; return }
         failures += 1
         log(output)
-        if scheduler.running != nil {     // 排程航班不放棄:位置依時間計算,連線恢復後會自動追上
+        if scheduler.running != nil {     // Scheduled flights never give up: the position is computed from time and catches up once the connection returns
             phase = .failed(L("裝置暫時離線,恢復連線後會自動追上目前位置"))
             return
         }
@@ -162,7 +162,7 @@ final class AppModel {
         }
     }
 
-    // MARK: 動作
+    // MARK: Actions
     func apply() {
         guard let c = picked else { return }
         controller.teleport(to: c)
@@ -208,7 +208,7 @@ final class AppModel {
         if ok { phase = .simulating; log(L("→ 情境:%@", name)) } else { phase = .failed(L("情境失敗")) }
     }
 
-    // MARK: 快速定位
+    // MARK: Quick locations
     func teleportRandom(radius: Double) {
         guard let base = picked ?? active else { log(L("請先選一個中心點")); return }
         let c = base.moved(distance: radius * Double.random(in: 0...1).squareRoot(), bearing: Double.random(in: 0..<(2 * .pi)))
@@ -217,7 +217,7 @@ final class AppModel {
         apply()
     }
 
-    /// 以選定的交通方式,從目前位置前往選取的目標。
+    /// Travels from the current position to the picked target using the selected transport.
     func travelToPicked() {
         guard let p = picked else { return }
         guard controller.current != nil else { log(L("尚未有目前位置,請先「套用到 iPhone」")); return }
@@ -229,7 +229,7 @@ final class AppModel {
         startMovement()
     }
 
-    /// 選單列 / 快捷鍵:開始、暫停、繼續。
+    /// Menu bar / shortcut: start, pause, resume.
     func toggleRun() {
         switch controller.state {
         case .running: controller.pause()
@@ -239,7 +239,7 @@ final class AppModel {
         }
     }
 
-    // MARK: 地址
+    // MARK: Address
     private func lookupAddress() {
         addrTask?.cancel()
         guard let p = picked else { pickedAddress = ""; return }
@@ -279,7 +279,7 @@ final class AppModel {
         camera = .camera(MapCamera(centerCoordinate: c.clCoordinate, distance: zoom))
     }
 
-    // MARK: 搜尋
+    // MARK: Search
     func search() async {
         let req = MKLocalSearch.Request(); req.naturalLanguageQuery = searchText
         guard let items = try? await MKLocalSearch(request: req).start().mapItems, !items.isEmpty else {
@@ -296,7 +296,7 @@ final class AppModel {
         reveal(c)
     }
 
-    // MARK: 路線工具
+    // MARK: Route tools
     func removeLastWaypoint() { if !controller.waypoints.isEmpty { controller.waypoints.removeLast() } }
     func clearWaypoints() { controller.waypoints.removeAll() }
     func reverseWaypoints() { controller.waypoints.reverse() }
@@ -333,7 +333,7 @@ final class AppModel {
         log(L("已匯出軌跡 %lld 點", trail.count))
     }
 
-    // MARK: 收藏 / 歷史
+    // MARK: Favorites / history
     func savePlace(name: String) {
         guard let c = picked else { return }
         library.places.insert(SavedPlace(name: name.isEmpty ? String(format: "%.4f, %.4f", c.latitude, c.longitude) : name, coordinate: c), at: 0)
@@ -357,7 +357,7 @@ final class AppModel {
     }
     private func persist() { if !demo { store.save(library) } }
 
-    // MARK: 結束 app
+    // MARK: Quitting
     func clearBeforeQuit() {
         controller.stop()
         guard !demo, autoClearOnQuit, phase == .simulating else { return }

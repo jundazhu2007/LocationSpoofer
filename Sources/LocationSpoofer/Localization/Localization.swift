@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-/// 介面語言。`system` 會跟隨 macOS(含「系統設定 → 語言與地區 → App」的個別設定)。
+/// UI language. `system` follows macOS, including the per-app setting in System Settings → Language & Region → Apps.
 enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
     case system
     case zhHant = "zh-Hant"
@@ -11,7 +11,7 @@ enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
     var id: String { rawValue }
     static let supported = ["zh-Hant", "en", "ja"]
 
-    /// 選單顯示名稱(各語言以自己的文字呈現,不隨介面語言改變)。
+    /// Menu display name (each language shows its own name, independent of the UI language).
     var nativeName: String {
         switch self {
         case .system: L("跟隨系統")
@@ -22,7 +22,7 @@ enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
     }
 }
 
-/// 執行緒安全的字串查詢。原文(繁體中文)即 key,找不到翻譯時回傳原文。
+/// Thread-safe string lookup. The source text (Traditional Chinese) is the key; falls back to it when no translation exists.
 final class Localizer: @unchecked Sendable {
     static let shared = Localizer()
     private let lock = NSLock()
@@ -44,7 +44,7 @@ final class Localizer: @unchecked Sendable {
         return bundle?.localizedString(forKey: key, value: key, table: nil) ?? key
     }
 
-    /// 把使用者的選擇換成實際語言代碼。
+    /// Turns the user's choice into an actual language code.
     static func resolve(_ lang: AppLanguage) -> String {
         if lang != .system { return lang.rawValue }
         for preferred in Bundle.main.preferredLocalizations + Locale.preferredLanguages {
@@ -56,16 +56,16 @@ final class Localizer: @unchecked Sendable {
     }
 }
 
-/// 取得目前語言的字串;有參數時以 String(format:) 套用(%@ 字串、%lld 整數、%.1f 小數)。
+/// Returns the string for the current language; with arguments it applies String(format:) (%@ string, %lld integer, %.1f decimal).
 func L(_ key: String, _ args: CVarArg...) -> String {
     let format = Localizer.shared.string(key)
     return args.isEmpty ? format : String(format: format, locale: Locale(identifier: Localizer.shared.code), arguments: args)
 }
 
-/// App 內的語言選擇。變更後 `revision` 會遞增,根視圖以它重建,讓所有文字立即更新。
+/// In-app language choice. `revision` increments on change; the root view is rebuilt with it so all text updates immediately.
 @MainActor @Observable
 final class LanguageSettings {
-    /// 截圖模式會關閉,避免覆寫使用者的語言偏好。
+    /// Disabled in screenshot mode so the user's language preference is not overwritten.
     var persistsChanges = true
     var selection: AppLanguage {
         didSet {

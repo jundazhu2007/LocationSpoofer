@@ -4,7 +4,7 @@ import Foundation
 
 @MainActor
 struct SchedulerTests {
-    /// 假時鐘:1 真實秒 = 10 假分鐘。
+    /// Fake clock: 1 real second = 10 fake minutes.
     final class FakeClock: @unchecked Sendable {
         let realStart = Date(), fakeStart = Date(), speed = 600.0
         func now() -> Date { fakeStart.addingTimeInterval(Date().timeIntervalSince(realStart) * speed) }
@@ -21,7 +21,7 @@ struct SchedulerTests {
         let dep = clock.fakeStart.addingTimeInterval(20 * 60)
         var f = ScheduledFlight(flightNumber: "T1", origin: "TPE", destination: "HKG")
         f.hour = cal.component(.hour, from: dep); f.minute = cal.component(.minute, from: dep)
-        f.weekdays = Set(1...7)      // 每天重複,避免測試在午夜前後跨日而不穩定
+        f.weekdays = Set(1...7)      // Repeat every day so the test is not flaky when it runs around midnight
         f.durationMinutes = 90; f.boardingLeadMinutes = 10
         sch.flights = [f]
         sch.start()
@@ -42,8 +42,8 @@ struct SchedulerTests {
         #expect(logs.contains { $0.contains("起飛") })
         #expect(logs.contains { $0.contains("已落地") })
         let landing = try #require(landedAt)
-        // 排程器每真實 1 秒檢查一次 = 10 假分鐘的偵測誤差,所以只能晚不能早:
-        // 若誤點(15 分)沒套用,落地會早 15 分鐘而失敗。
+        // The scheduler checks once per real second = 10 fake minutes of detection error, so landing can only be late, never early:
+        // if the 15 min delay was not applied, landing would be 15 min early and this fails.
         let diffMinutes = landing.timeIntervalSince(expected) / 60
         #expect(diffMinutes > -4 && diffMinutes < 12)
         let hkg = try #require(AirportTests.db.airport("HKG"))
@@ -52,7 +52,7 @@ struct SchedulerTests {
 
     @Test func occurrencesRespectWeekdays() {
         var f = ScheduledFlight(origin: "TPE", destination: "HKG")
-        f.hour = 9; f.minute = 30; f.weekdays = [2, 4]    // 週一、三
+        f.hour = 9; f.minute = 30; f.weekdays = [2, 4]    // Monday, Wednesday
         let list = f.occurrences(from: Date(), days: 14)
         #expect(!list.isEmpty)
         for d in list { #expect([2, 4].contains(Calendar.current.component(.weekday, from: d))) }

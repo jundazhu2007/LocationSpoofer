@@ -9,7 +9,7 @@ enum AboutPanel {
         let secondary: [NSAttributedString.Key: Any] = [.font: NSFont.systemFont(ofSize: 10), .foregroundColor: NSColor.secondaryLabelColor, .paragraphStyle: paragraph]
         let bold: [NSAttributedString.Key: Any] = [.font: NSFont.boldSystemFont(ofSize: 12), .foregroundColor: NSColor.labelColor, .paragraphStyle: paragraph]
 
-        /// 一行文字;片段若帶網址就成為連結。
+        /// One line of text; a part that carries a URL becomes a link.
         func line(_ parts: [(String, URL?)], _ attrs: [NSAttributedString.Key: Any]) {
             for (text, url) in parts {
                 var a = attrs

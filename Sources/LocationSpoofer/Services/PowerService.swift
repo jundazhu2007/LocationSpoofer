@@ -1,7 +1,7 @@
 import Foundation
 import ServiceManagement
 
-/// 讓排程在無人看守時也能運作:防睡眠、開機自動啟動、預約喚醒。
+/// Lets schedules run unattended: prevent sleep, launch at login, scheduled wake.
 @MainActor @Observable
 final class PowerService {
     var preventSleep: Bool = UserDefaults.standard.object(forKey: "preventSleep") as? Bool ?? true {
@@ -14,7 +14,7 @@ final class PowerService {
 
     private var activity: NSObjectProtocol?
 
-    /// 有啟用的航班時,保持 app 活躍(避免 App Nap 讓計時器變慢),並依設定阻止閒置睡眠。
+    /// While any flight is enabled, keeps the app active (so App Nap does not slow timers) and, if configured, prevents idle sleep.
     func update() {
         if let a = activity { ProcessInfo.processInfo.endActivity(a); activity = nil }
         guard wantsActive else { return }
@@ -34,7 +34,7 @@ final class PowerService {
         sleepDisabled = r.contains(/SleepDisabled\s+1/)
     }
 
-    /// 需要管理員密碼。合上螢幕(闔蓋)也不睡眠。
+    /// Needs an administrator password. Keeps the Mac awake even with the lid closed.
     func setSleepDisabled(_ on: Bool) async {
         do { try Self.admin("/usr/bin/pmset -a disablesleep \(on ? 1 : 0)"); message = "" }
         catch { message = L("設定失敗:%@", error.localizedDescription) }

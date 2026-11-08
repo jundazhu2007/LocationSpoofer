@@ -49,7 +49,7 @@ struct ControlPanel: View {
     }
 }
 
-// MARK: - 各區塊
+// MARK: - Sections
 
 struct DeviceSection: View {
     @Environment(AppModel.self) private var model
@@ -321,7 +321,7 @@ struct PhaseLabel: View {
     }
 }
 
-// MARK: - 搖桿
+// MARK: - Joystick
 
 struct JoystickView: View {
     @Binding var vector: CGVector
@@ -347,7 +347,7 @@ struct JoystickView: View {
     }
 }
 
-// MARK: - 飛行
+// MARK: - Flight
 
 struct FlightSection: View {
     @Environment(AppModel.self) private var model

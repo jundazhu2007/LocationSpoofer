@@ -2,7 +2,7 @@ import Foundation
 
 struct CommandResult: Sendable { let status: Int32; let output: String }
 
-/// 執行 `xcrun devicectl ...`(Xcode 內建,走 CoreDevice,支援 USB 與無線)。
+/// Runs `xcrun devicectl ...` (bundled with Xcode, uses CoreDevice, supports USB and wireless).
 enum DeviceCtl {
     static func run(_ args: [String], timeout: Duration = .seconds(30)) async -> CommandResult {
         await withCheckedContinuation { cont in
@@ -23,7 +23,7 @@ enum DeviceCtl {
     }
     private final class Box: @unchecked Sendable { let p: Process; init(_ p: Process) { self.p = p } }
 
-    /// 同步版本,僅供結束 app 時還原定位使用。
+    /// Synchronous variant, only used to restore the location when the app quits.
     static func runSync(_ args: [String]) {
         let p = Process()
         p.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")

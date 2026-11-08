@@ -43,7 +43,7 @@ struct ContentView: View {
         .task { model.start() }
     }
 
-    /// 方向鍵 / WASD → 搖桿
+    /// Arrow keys / WASD → joystick
     private func handleKey(_ press: KeyPress) -> KeyPress.Result {
         guard model.controller.mode == .joystick else { return .ignored }
         let ch = press.characters.lowercased()
@@ -64,7 +64,7 @@ struct ContentView: View {
     }
 }
 
-// MARK: - 地圖
+// MARK: - Map
 
 struct MapArea: View {
     @Environment(AppModel.self) private var model
@@ -87,7 +87,7 @@ struct MapArea: View {
                             .frame(width: 26, height: 26).background(.blue, in: .circle)
                             .overlay(Circle().stroke(.white, lineWidth: 2)).shadow(radius: 2)
                             .contentShape(Circle())
-                            .onTapGesture { }     // 避免點到圓點時又新增路徑點
+                            .onTapGesture { }     // Swallow taps so clicking a dot doesn't add another waypoint
                             .gesture(DragGesture(minimumDistance: 1, coordinateSpace: .global)
                                 .onChanged { v in
                                     if let coord = proxy.convert(v.location, from: .global) { c.moveWaypoint(i, to: Coordinate(coord)) }
@@ -135,7 +135,7 @@ struct MapArea: View {
     }
 }
 
-// MARK: - 資訊列
+// MARK: - HUD
 
 struct HUD: View {
     @Environment(AppModel.self) private var model

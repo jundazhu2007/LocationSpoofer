@@ -36,7 +36,7 @@ struct DeviceService: Sendable {
     }
 }
 
-/// 序列化送出座標:慢的指令不會堆積,每台裝置永遠只送「最新」那一個;多台裝置並行。
+/// Serialized sending: slow commands never pile up and each device only ever gets the latest coordinate; devices are served in parallel.
 actor LocationSender {
     private var pending: [String: Coordinate] = [:]
     private var draining = false
