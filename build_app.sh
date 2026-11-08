@@ -6,11 +6,17 @@ cd "$(dirname "$0")"
 VERSION="${VERSION:-1.0.0}"
 APP=LocationSpoofer.app
 
-swift build -c release
+if [ "${UNIVERSAL:-0}" = "1" ]; then
+  swift build -c release --arch arm64 --arch x86_64
+  BIN="$(swift build -c release --arch arm64 --arch x86_64 --show-bin-path)/LocationSpoofer"
+else
+  swift build -c release
+  BIN="$(swift build -c release --show-bin-path)/LocationSpoofer"
+fi
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
-cp .build/release/LocationSpoofer "$APP/Contents/MacOS/"
+cp "$BIN" "$APP/Contents/MacOS/"
 cp -R Resources/* "$APP/Contents/Resources/"
 
 cat > "$APP/Contents/Info.plist" <<PL

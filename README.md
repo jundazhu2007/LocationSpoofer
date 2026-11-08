@@ -49,6 +49,17 @@
 - 一支 iPhone / iPad,已開啟**開發者模式**(設定 → 隱私權與安全性 → 開發者模式),並已與這台 Mac 配對、信任
 - 已在 iOS 27.3 實測;更舊的版本理論上可行但**未測試**
 
+## 下載
+
+到 [Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest) 下載 `LocationSpoofer-*-macOS-arm64.zip`(**Apple 晶片**),解壓後放進「應用程式」。
+
+因為沒有 Apple 開發者帳號,app 無法公證,第一次開啟會被 macOS 擋下。請擇一:
+
+- 開啟一次後,到「系統設定 → 隱私權與安全性」,按「仍要打開」;或
+- 在終端機執行:`xattr -dr com.apple.quarantine /Applications/LocationSpoofer.app`
+
+想自己確認內容,可用 `shasum -a 256` 比對 Release 附的 `SHA256SUMS.txt`,或直接從原始碼建置(見下)。Intel Mac 請自行建置(`UNIVERSAL=1 ./build_app.sh`,**未測試**)。
+
 ## 建置與執行
 
 ```sh

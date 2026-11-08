@@ -49,6 +49,17 @@ Also:
 - An iPhone / iPad with **Developer Mode** on (Settings → Privacy & Security → Developer Mode), paired with and trusting this Mac
 - Tested on iOS 27.3; older versions should work in theory but are **untested**
 
+## Download
+
+Grab `LocationSpoofer-*-macOS-arm64.zip` (**Apple silicon**) from [Releases](https://github.com/jundazhu2007/LocationSpoofer/releases/latest), unzip it and move the app to Applications.
+
+The app is not notarized (no Apple Developer account), so macOS blocks the first launch. Do one of:
+
+- Open it once, then go to System Settings → Privacy & Security and click **Open Anyway**; or
+- Run `xattr -dr com.apple.quarantine /Applications/LocationSpoofer.app` in Terminal.
+
+To verify the download, compare `shasum -a 256` with the `SHA256SUMS.txt` attached to the release, or build from source (below). On an Intel Mac, build it yourself (`UNIVERSAL=1 ./build_app.sh`, **untested**).
+
 ## Build & run
 
 ```sh
