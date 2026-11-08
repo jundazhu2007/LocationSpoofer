@@ -9,13 +9,14 @@
 #
 # Usage:
 #   SIGN_ID="Developer ID Application: Your Name (TEAMID)" ./scripts/release.sh
-#   Optional: VERSION=1.0.0  NOTARY_PROFILE=LocationSpoofer
+#   Optional: VERSION=1.0.1  NOTARY_PROFILE=LocationSpoofer  UNIVERSAL=0 (arm64 only)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 : "${SIGN_ID:?Set SIGN_ID to your \"Developer ID Application: ...\" identity (security find-identity -v -p codesigning)}"
 VERSION="${VERSION:-1.0.0}"
 PROFILE="${NOTARY_PROFILE:-LocationSpoofer}"
+export UNIVERSAL="${UNIVERSAL:-1}"       # releases are universal (Apple silicon + Intel) unless UNIVERSAL=0
 ARCH_NAME="$([ "${UNIVERSAL:-0}" = "1" ] && echo universal || echo arm64)"
 APP=LocationSpoofer.app
 NAME="LocationSpoofer-$VERSION-macOS-$ARCH_NAME"
